@@ -4,25 +4,47 @@ module.exports = function(app) {
   // Get all properties
   app.get("/api/properties", function(req, res) {
     db.Properties.findAll({}).then(function(dbProperties) {
-      console.log("findAll in apiRoutes --------------- \n\n");
-      console.log(dbProperties);
       res.json(dbProperties);
     });
   });
 
-  // Create a new example
-  // app.post("/api/examples", function(req, res) {
-  //   db.Properties.create(req.body).then(function(dbExample) {
-  //     res.json(dbExample);
+  // Get all properties based on search criteria
+  app.get("/api/properties/:params", function(req, res) {
+    //var params = req.params.params;
+    var where = queryToJson(req.params.params);
+
+    //console.log("\nparams: " + params + "\n");
+    console.log("\nwhere: " + where + "\n");
+
+    db.Properties.findAll({ where: where }).then(function(dbProperties) {
+      res.json(dbProperties);
+    });
+  });
+
+  // Create a new favorite
+  // app.post("/api/favorites", function(req, res) {
+  //   db.Favorites.create(req.body).then(function(dbFavorites) {
+  //     res.json(dbFavorites);
   //   });
   // });
 
-  // Delete an example by id
-  // app.delete("/api/examples/:id", function(req, res) {
-  //   db.Properties.destroy({ where: { id: req.params.id } }).then(function(
-  //     dbExample
+  // Delete a favorite property by id
+  // app.delete("/api/favorites/:id", function(req, res) {
+  //   db.Favorites.destroy({ where: { id: req.params.id } }).then(function(
+  //     dbFavorite
   //   ) {
-  //     res.json(dbExample);
+  //     res.json(dbFavorite);
   //   });
   // });
+
+  function queryToJson(query) {
+    var keyValues = query.split("&");
+
+    var result = {};
+    keyValues.forEach(function(keyValue) {
+      keyValue = keyValue.split("=");
+      result[keyValue[0]] = decodeURIComponent(keyValue[1] || "");
+    });
+    return JSON.parse(JSON.stringify(result));
+  }
 };

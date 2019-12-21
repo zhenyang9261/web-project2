@@ -28,7 +28,7 @@ CREATE TABLE Properties(
     PRIMARY KEY(Id)
 );
 
-CREATE TABLE Users_Properties(
+CREATE TABLE Favorites(
 	userId INT NOT NULL, 
     propertyId INT NOT NULL, 
     FOREIGN KEY(userId) REFERENCES Users(Id) ON DELETE CASCADE, 

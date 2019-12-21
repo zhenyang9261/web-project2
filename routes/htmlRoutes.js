@@ -4,8 +4,6 @@ module.exports = function(app) {
   // Load index page
   app.get("/", function(req, res) {
     db.Properties.findAll({}).then(function(dbProperties) {
-      console.log("findAll in htmlRoutes --------------- \n\n");
-      console.log(dbProperties);
       res.render("index", {
         msg: "Welcome!",
         properties: dbProperties
@@ -13,8 +11,8 @@ module.exports = function(app) {
     });
   });
 
-  // Load example page and pass in an example by id
-  app.get("/properties/:id", function(req, res) {
+  // Load property page and pass in a property by id
+  app.get("/property/:id", function(req, res) {
     db.Properties.findOne({ where: { id: req.params.id } }).then(function(
       dbProperty
     ) {
