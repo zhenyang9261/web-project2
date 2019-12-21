@@ -27,9 +27,13 @@ router.post("/login", (req, res, next) => {
 
                 if(result) {
                     jwt.sign({
-                        email: results[0].email;
+                        email: results[0].email,
                         userid: results[0].Id
-                    })
+                    }, 
+                    process.env.JWY_KEY, 
+                    {
+                        expiresIn: "1hr"
+                    });
                     return res.status(200).json({
                         message: "Auth successful"
                     });
