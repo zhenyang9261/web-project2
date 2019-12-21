@@ -17,13 +17,14 @@ CREATE TABLE Properties(
     city VARCHAR(30) NOT NULL, 
     stateCode VARCHAR(2), 
     zipCode VARCHAR(5) NOT NULL, 
-	numBeds DOUBLE NOT NULL, 
-    numBathrooms DOUBLE NOT NULL, 
-    propertyType VARCHAR(25) DEFAULT "house", 
+	numBeds INT NOT NULL, 
+    numBathrooms INT NOT NULL, 
+    propertyType VARCHAR(25) DEFAULT "Single Family", 
     numStories INT DEFAULT 1, 
-    sqf INT,
-    yearBuilt INT,
-    price FLOAT,
+    sqf INT NOT NULL,
+    yearBuilt INT NOT NULL,
+    price DOUBLE NOT NULL,
+    picURL VARCHAR(255),
     PRIMARY KEY(Id)
 );
 
