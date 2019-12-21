@@ -3,21 +3,23 @@ var db = require("../models");
 module.exports = function(app) {
   // Load index page
   app.get("/", function(req, res) {
-    db.Properties.findAll({}).then(function(dbExamples) {
+    db.Properties.findAll({}).then(function(dbProperties) {
+      console.log("findAll in htmlRoutes --------------- \n\n");
+      console.log(dbProperties);
       res.render("index", {
         msg: "Welcome!",
-        properties: dbExamples
+        properties: dbProperties
       });
     });
   });
 
   // Load example page and pass in an example by id
-  app.get("/example/:id", function(req, res) {
+  app.get("/properties/:id", function(req, res) {
     db.Properties.findOne({ where: { id: req.params.id } }).then(function(
-      dbExample
+      dbProperty
     ) {
-      res.render("example", {
-        example: dbExample
+      res.render("property", {
+        property: dbProperty
       });
     });
   });
