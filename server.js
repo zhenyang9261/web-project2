@@ -25,6 +25,9 @@ app.set("view engine", "handlebars");
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
 
+var users = require("./routes/users");
+app.use(users);
+
 var syncOptions = { force: false };
 
 // If running a test, set syncOptions.force to true
