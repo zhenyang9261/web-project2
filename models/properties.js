@@ -51,19 +51,19 @@ module.exports = function(sequelize, DataTypes) {
             }
         },
         lotSize: {
-            type: DataTypes.INT, 
+            type: DataTypes.INTEGER, 
             validate: {
                 isNumeric: true
             }
         }, 
         sqf: {
-            type: DataTypes.INT, 
+            type: DataTypes.INTEGER, 
             validate: {
                 isNumeric: true
             }
         }, 
         yearBuilt: {
-            type: DataTypes.INT, 
+            type: DataTypes.INTEGER, 
             validate: {
                 isNumeric: true
             }
@@ -81,7 +81,7 @@ module.exports = function(sequelize, DataTypes) {
             }
         }, 
         lastSoldDate: {
-            type: DataTypes.DATE, 
+            type: DataTypes.DATEONLY, 
             validate: {
                 isDate: true
             }
@@ -96,6 +96,6 @@ module.exports = function(sequelize, DataTypes) {
             onDelete: 'cascade'
         });
     }
-    
+
     return Properties;
 }

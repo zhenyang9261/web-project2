@@ -16,7 +16,7 @@ module.exports = function(sequelize, DataTypes) {
             }
         },
         phone: {
-            type: DataType.String,
+            type: DataTypes.STRING,
             validate: {
                 not: ['[a-z]', 'i']
             }
@@ -26,7 +26,6 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.ENUM({
             values: ["buyer", "seller", "realtor"]
         }),
-        defaultValue: "buyer"
     });
     Users.associate = (models) => {
         Users.belongsToMany(models.Properties, {
