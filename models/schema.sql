@@ -26,7 +26,8 @@ CREATE TABLE Properties(
 	numBeds DOUBLE NOT NULL, 
     numBathrooms DOUBLE NOT NULL, 
     propertyType VARCHAR(25) DEFAULT "house", 
-    numStories INT DEFAULT 1, 
+    -- deleting num stories
+    -- numStories INT DEFAULT 1, 
     -- adding size of lot
     lotSize INT,
     sqf INT,
