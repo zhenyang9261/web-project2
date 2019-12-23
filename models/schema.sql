@@ -46,3 +46,23 @@ CREATE TABLE Users_Properties(
     FOREIGN KEY(propertyId) REFERENCES Properties(Id) ON DELETE CASCADE, 
     PRIMARY KEY(userId, propertyId)
 );
+
+CREATE TABLE Messages(
+    Id INT NOT NULL AUTO_INCREMENT, 
+    text TEXT NOT NULL, 
+    timeSent DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    recipientId INT NOT NULL,
+    PRIMARY KEY(Id), 
+    FOREIGN KEY(recipientId) REFERENCES Users(Id)
+);
+
+CREATE TABLE Users_Messages(
+    userId INT NOT NULL,
+    messageId INT NOT NULL, 
+    FOREIGN KEY(userId) REFERENCES Users(Id) ON DELETE CASCADE, 
+    FOREIGN KEY(messageId) REFERENCES Messages(Id) ON DELETE CASCADE,
+    PRIMARY KEY(userId, messageId)
+
+);
+
+

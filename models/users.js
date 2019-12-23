@@ -34,6 +34,13 @@ module.exports = function(sequelize, DataTypes) {
           foreignKey: 'userId', 
           onDelete: 'cascade'
         });
+
+        Users.belongsToMany(models.Messages, {
+            through: 'UsersMessages', 
+            as: 'Messages', 
+            foreignKey: 'messageId', 
+            onDelete: 'cascade'
+        })
       };
 
     return Users;
