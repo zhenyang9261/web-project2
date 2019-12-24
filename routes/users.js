@@ -124,7 +124,8 @@ router.post("/login", (req, res) => {
 });
 
 router.get("/chat", (req, res) => {
-    res.render("chat");
-})
+    res.io.emit("socketToMe", "users");
+    res.send('respond with a resource.');
+});
 
 module.exports = router;

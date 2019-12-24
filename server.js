@@ -6,6 +6,7 @@ var db = require("./models");
 
 var app = express();
 var PORT = process.env.PORT || 3000;
+var server, io;
 
 // Middleware
 app.use(express.urlencoded({ extended: false }));
@@ -25,6 +26,9 @@ app.set("view engine", "handlebars");
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
 
+const users = require("./routes/users.js");
+app.use("/users", users);
+
 var syncOptions = { force: false };
 
 // If running a test, set syncOptions.force to true
@@ -35,13 +39,19 @@ if (process.env.NODE_ENV === "test") {
 
 // Starting the server, syncing our models ------------------------------------/
 db.sequelize.sync(syncOptions).then(function() {
-  app.listen(PORT, function() {
+  server = app.listen(PORT, function() {
     console.log(
       "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
       PORT,
       PORT
     );
   });
+  
+  io = require('socket.io')(server);
+  app.use((req, res, next) => {
+    res.io = io;
+    next();
+  });
 });
 
-module.exports = app;
+module.exports = {app: app, server: server};
