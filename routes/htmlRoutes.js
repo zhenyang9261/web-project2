@@ -20,6 +20,10 @@ module.exports = function(app) {
     });
   });
 
+  app.get("/chat", function(req, res) {
+    res.render("chat")
+  })
+
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {
     res.render("404");
