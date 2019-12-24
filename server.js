@@ -27,6 +27,7 @@ require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
 
 const users = require("./routes/users.js");
+console.log(users);
 app.use("/users", users);
 
 var syncOptions = { force: false };
@@ -52,6 +53,7 @@ db.sequelize.sync(syncOptions).then(function() {
     res.io = io;
     next();
   });
+
 });
 
-module.exports = {app: app, server: server};
+module.exports = {app: app, server: server, io: io};

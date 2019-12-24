@@ -1,9 +1,16 @@
+// importing express and creating router
 var express = require("express");
 var router = express.Router();
+// importing Users model
 var User = require("../models").User;
+// importing jwt and bcrypt for auth and making salt rounds 10
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcrypt");
 const saltRounds = 10;
+// importing server and io from server.js for real-time
+// messaging
+var server = require("../server").server;
+var io = require("../server").io;
 
 
 router.post("/signup", (req, res) => {
