@@ -1,0 +1,49 @@
+<div class="container-fluid">
+    {{!-- navbar --}}
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+        <h5 class="my-0 mr-md-auto font-weight-normal">Pillow</h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <a class="p-2 text-dark" href="#">Login</a>
+        </nav>
+        <a class="btn btn-outline-primary" href="#">Sign up</a>
+    </div>
+    {{!-- Main body page --}}
+    <div class="container-fluid">
+        <div class="row">
+            {{!-- Google Maps --}}
+            <div class="col-md-6 d-none d-lg-block">
+                <img alt="Bootstrap Image Preview" src="https://i.stack.imgur.com/8KmHl.png"
+                    class="img-fluid rounded" />
+            </div>
+            {{!-- List of Houses --}}
+            <div class="col-md-12 col-lg-6">
+                <div class="row row-cols-1 row-cols-md-2">
+                    {{#each housesList}}
+                    <div class="col mb-4">
+                        <div class="card">
+                            <img src={{imgUrl}} class="card-img-top" alt="...">
+                            <div class="card-body"
+                               <ul class="list-unstyled list-inline">
+                                   {{!-- House Price --}}
+                                    <li class="list-inline-item">
+                                        <h5 class="card-title">$<span>{{price}}</span></h5>
+                                    </li>
+                                    {{!-- Number of Bedrooms --}}
+                                    <li class="list-inline-item"><small class="text-muted"><span>{{bedrooms}}</span>ba</small></li>
+                                    {{!-- Numbers of Bathrooms --}}
+                                    <li class="list-inline-item border-right border-left pr-2 pl-2"><small class="text-muted"><span>{{bathrooms}}</span>bds</small></li>
+                                    {{!-- House square footage --}}
+                                    <li class="list-inline-item"><small class="text-muted"><span>{{sqft}}</span>sqft</small></li>
+                               </ul>
+                               {{!-- House Address --}}
+                                <p class="card-text" id="house-address">4553 Pleasant Garden Rd, Greensboro, NC 27406</p>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

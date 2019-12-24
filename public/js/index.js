@@ -1,3 +1,82 @@
+var addressData = {};
+$(function(){
+
+  /*=============================================
+   =    Address Autocomplete search API         =
+  =============================================*/
+
+  var placesAutocomplete = places({
+    appId: "plUZWS470NUB",
+    apiKey: "d8417e1882d8024fb43cf8a17e547c76",
+    container: document.querySelector("#address")
+  });
+
+  placesAutocomplete.on("change", function (e) {
+    // Store address data
+    addressData.city = e.suggestion.name || "";
+    addressData.zip = e.suggestion.postcode || "";
+    addressData.lat = e.suggestion.latlng.lat || "";
+    addressData.lng = e.suggestion.latlng.lng || "";
+    /**
+
+        TODO:
+        - Make a Get request to DB using data (addressData)
+        - Load houses view page 
+
+    */
+  });
+});
+
+/*=============================================
+=              Geolocation API            =
+=============================================*/
+$(function(){
+  var places = algoliasearch.initPlaces(
+    "plUZWS470NUB",
+    "d8417e1882d8024fb43cf8a17e547c76"
+  );
+
+  function getCurrentAddress(response) {
+    var hits = response.hits;
+    var suggestion = hits[0];
+
+    if (suggestion && suggestion.locale_names && suggestion.city) {
+      addressData.city = suggestion.city.default[0] || "";
+      addressData.zip = (suggestion.postcode || [])[0] || "";
+      addressData.lat = (suggestion._geoloc.lat || "");
+      addressData.lng = (suggestion._geoloc.lng || "");
+      console.log(addressData);
+      /**
+      
+          TODO:
+          - Make a Get request to DB using data (addressData)
+          - Load houses view page
+      
+      */
+    }
+  }
+
+  var $button = document.getElementsByClassName("ap-icon-pin")[0];
+
+  $button.addEventListener("click", function () {
+    $button.textContent = "Locating...";
+
+    navigator.geolocation.getCurrentPosition(function (response) {
+      var coords = response.coords;
+      lat = coords.latitude.toFixed(6);
+      lng = coords.longitude.toFixed(6);
+
+      places
+        .reverse({
+          aroundLatLng: lat + "," + lng,
+          hitsPerPage: 1
+        })
+        .then(getCurrentAddress);
+    });
+  });
+});
+
+
 // Get references to page elements
 var $exampleText = $("#example-text");
 var $exampleDescription = $("#example-description");

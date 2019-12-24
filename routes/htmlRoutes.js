@@ -1,27 +1,46 @@
 var db = require("../models");
+var path = require("path");
 
-module.exports = function(app) {
+/*============  TEST DATA  =============*/
+let housesData = {
+  housesList: [
+    {
+      price: 1000000,
+      bedrooms: 6,
+      bathrooms: 7,
+      sqft: 8766,
+      imgUrl: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+    },
+    {
+      price: 2000000,
+      bedrooms: 5,
+      bathrooms: 6,
+      sqft: 9766,
+      imgUrl: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+    },
+    {
+      price: 2000000,
+      bedrooms: 3,
+      bathrooms: 2,
+      sqft: 4766,
+      imgUrl: "https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+    }
+  ]
+}
+
+module.exports = function (app) {
   // Load index page
-  app.get("/", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.render("index", {
-        msg: "Welcome!",
-        examples: dbExamples
-      });
-    });
+  app.get("/", function (req, res) {
+    res.render("index");
   });
 
-  // Load example page and pass in an example by id
-  app.get("/example/:id", function(req, res) {
-    db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
-      res.render("example", {
-        example: dbExample
-      });
-    });
+  app.get("/houses", function (req, res) {
+    // Render list of houses user enters address into search page
+    res.render("houses", housesData);
   });
 
   // Render 404 page for any unmatched routes
-  app.get("*", function(req, res) {
+  app.get("*", function (req, res) {
     res.render("404");
   });
 };
