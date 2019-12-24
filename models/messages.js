@@ -16,8 +16,7 @@ module.exports = function(sequelize, DataTypes) {
     Messages.associate = (models) => {
         Messages.belongsToMany(models.Users, {
             through: 'UsersMessages', 
-            as: 'Users',
-            foreignKey: 'userId', 
+            foreignKey: 'messageId', 
             onDelete: 'cascade'
         })
     }

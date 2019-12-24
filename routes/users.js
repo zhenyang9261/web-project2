@@ -2,7 +2,8 @@
 var express = require("express");
 var router = express.Router();
 // importing Users model
-var User = require("../models").User;
+var User = require("../models").Users;
+var Message = require("../models").Messages;
 // importing jwt and bcrypt for auth and making salt rounds 10
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcrypt");
@@ -11,7 +12,6 @@ const saltRounds = 10;
 // messaging
 var server = require("../server").server;
 var io = require("../server").io;
-
 
 router.post("/signup", (req, res) => {
     // checks to see if email already exists in the database
@@ -131,8 +131,46 @@ router.post("/login", (req, res) => {
 });
 
 router.get("/chat", (req, res) => {
-    res.io.emit("socketToMe", "users");
-    res.send('respond with a resource.');
+    User.findAll({
+        include: [{
+            model: Message, 
+        }], 
+        where: {id: 1}
+    })
+    .then(rows => {
+        let recipients = [];
+        let messages = [];
+
+        for(const message of rows[0].Messages) {
+            if(!recipients.includes(message.recipientId)) {
+                recipients.push(message.recipientId);
+            }
+
+            delete message.dataValues["UsersMessages"];
+            messages.push(message.dataValues);
+        }
+
+        for(const recipient of recipients) {
+            Message.findAll({
+                include: [{
+                    model: User,
+                    where: {id: recipient}
+                }], 
+                where: {recipientId: 1}
+            })
+            .then(rows => {
+                console.log(rows);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
+    })
+    .catch(err => {
+        console.log(err);
+    });
+
+    return res.render("chat");
 });
 
 module.exports = router;

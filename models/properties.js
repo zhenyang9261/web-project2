@@ -91,7 +91,6 @@ module.exports = function(sequelize, DataTypes) {
     Properties.associate = (models) => {
         Properties.belongsToMany(models.Users, {
             through: 'UsersProperties',
-            as: 'Properties',
             foreignKey: 'propertyId', 
             onDelete: 'cascade'
         });
