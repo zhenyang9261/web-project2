@@ -130,42 +130,96 @@ router.post("/login", (req, res) => {
         });
 });
 
+// currently only works if the user has one conversation
+function Conversation(senderId, recipientId) {
+    this.senderId = senderId,
+    this.recipientId = recipientId,
+    this.messages = [];
+
+    this.pushMessage = function(text, createdAt) {
+        this.messages.push({
+            text: text, 
+            createdAt: createdAt
+        });
+    }, 
+
+    this.sortMessages = function() {
+        return messages.sort((msg1, msg2) => msg1.createdAt - msg2.createdAt);
+    },
+
+    this.equals = function(obj) {
+        return this.senderId === obj.senderId && this.recipientId === obj.recipientId
+    }
+}
+
+function parseMessageRow(senderId, row) {
+    var message = {
+        text: row.dataValues.text, 
+        createdAt: row.dataValues.createdAt,
+        isFromUser: senderId === row.dataValues.Users[0].dataValues.id
+    }
+
+    if(senderId === row.dataValues.recipientId) {
+        message.senderId = row.dataValues.recipientId;
+        message.recipientId = row.dataValues.Users[0].dataValues.id
+    } else {
+        message.senderId = row.dataValues.Users[0].dataValues.id ;
+        message.recipientId = row.dataValues.recipientId;
+    }
+
+    return message;
+}
+
+function addMessageToConversations(message, conversations) {
+    if(conversations.length > 0) {
+        for(const conversation of conversations) {
+            if(conversation.equals(message)) {
+                return conversation.pushMessage({
+                    text: message.text, 
+                    createdAt: message.createdAt, 
+                    isSender: message.isSender
+                });
+            }
+        }
+    }
+    
+    let newConversation = new Conversation(message.senderId, message.recipientId);
+    newConversation.pushMessage(message.text, message.createdAt);
+
+    return conversations.push(newConversation);
+}
+
 router.get("/chat", (req, res) => {
-    User.findAll({
+    Message.findAll({
+        attributes: ["recipientId", "text", "createdAt"],
         include: [{
-            model: Message, 
+            model: User, 
+            attributes: ["id"],
+            $or: [
+                {
+                    where: {id: 2}
+                }
+            ],
+            order: [
+                ["createdAt", "DESC"], 
+            ],
         }], 
-        where: {id: 1}
+        $or: [
+            {
+                where: {recipientId: 2}
+            }
+        ]
     })
     .then(rows => {
-        let recipients = [];
-        let messages = [];
+        let conversations = [];
 
-        for(const message of rows[0].Messages) {
-            if(!recipients.includes(message.recipientId)) {
-                recipients.push(message.recipientId);
-            }
-
-            delete message.dataValues["UsersMessages"];
-            messages.push(message.dataValues);
+        for(const row of rows) {
+            let message = parseMessageRow(2, row);
+            addMessageToConversations(message, conversations);
         }
-
-        for(const recipient of recipients) {
-            Message.findAll({
-                include: [{
-                    model: User,
-                    where: {id: recipient}
-                }], 
-                where: {recipientId: 1}
-            })
-            .then(rows => {
-                console.log(rows);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-        }
+        console.log(conversations);
     })
+   
     .catch(err => {
         console.log(err);
     });
