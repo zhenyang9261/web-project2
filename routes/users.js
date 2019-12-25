@@ -136,10 +136,11 @@ function Conversation(senderId, recipientId) {
     this.recipientId = recipientId,
     this.messages = [];
 
-    this.pushMessage = function(text, createdAt) {
+    this.pushMessage = function(text, createdAt, isFromUser) {
         this.messages.push({
             text: text, 
-            createdAt: createdAt
+            createdAt: createdAt, 
+            isFromUser: isFromUser
         });
     }, 
 
@@ -172,19 +173,19 @@ function parseMessageRow(senderId, row) {
 
 function addMessageToConversations(message, conversations) {
     if(conversations.length > 0) {
-        for(const conversation of conversations) {
+        for(const conversation of conversations) {  
             if(conversation.equals(message)) {
-                return conversation.pushMessage({
-                    text: message.text, 
-                    createdAt: message.createdAt, 
-                    isSender: message.isSender
-                });
+                return conversation.pushMessage(
+                    message.text, 
+                    message.createdAt, 
+                    message.isFromUser
+                );
             }
         }
     }
     
     let newConversation = new Conversation(message.senderId, message.recipientId);
-    newConversation.pushMessage(message.text, message.createdAt);
+    newConversation.pushMessage(message.text, message.createdAt, message.isFromUser);
 
     return conversations.push(newConversation);
 }
@@ -217,14 +218,20 @@ router.get("/chat", (req, res) => {
             let message = parseMessageRow(2, row);
             addMessageToConversations(message, conversations);
         }
-        console.log(conversations);
+
+        conversations.sort((conv1, conv2) => {
+            const conv1Length = conv1.messages.length - 1;
+            const conv2Length = conv1.messages.length - 1;
+            return -(conv1.messages[conv1Length].createdAt - conv2.messages[conv2Length].createdAt);
+        })
+        res.json(conversations);
+        // res.render("chat", {conversations: conversations});
     })
    
     .catch(err => {
         console.log(err);
     });
 
-    return res.render("chat");
 });
 
 module.exports = router;
