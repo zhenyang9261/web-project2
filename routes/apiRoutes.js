@@ -58,19 +58,14 @@ module.exports = function(app) {
         keyValue[0] == "sqf" ||
         keyValue[0] == "yearBuilt"
       ) {
-        var value = {};
-        value[[Op.gte]] = decodeURIComponent(keyValue[1]);
-        result[keyValue[0]] = value;
+        result[keyValue[0]] = { [Op.gte]: decodeURIComponent(keyValue[1]) };
       } else if (keyValue[0] == "price") {
-        var value = {};
-        value["[Op.lte]"] = decodeURIComponent(keyValue[1]);
-        result[keyValue[0]] = value;
-        //result[keyValue[0]] = "[Op.lte]: " + decodeURIComponent(keyValue[1]);
+        result[keyValue[0]] = { [Op.lte]: decodeURIComponent(keyValue[1]) };
       } else {
         result[keyValue[0]] = decodeURIComponent(keyValue[1] || "");
       }
     });
     console.log(result);
-    return JSON.parse(JSON.stringify(result));
+    return result;
   }
 };
