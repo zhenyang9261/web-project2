@@ -1,37 +1,35 @@
-var addressData = {};
 $(function(){
+  // Variable will be use to store details of input address: City's name, State, postal code, latitude and longitude.
+  var addressData = {};
+
+  //Loads route => /houses/:zipcode
+  let getHomesForSaleData = function (zipcode) {
+    window.location.href = "/houses/" + zipcode;
+  }
 
   /*=============================================
-   =    Address Autocomplete search API         =
+  =        Autocomplete Places Search           =
   =============================================*/
-
   var placesAutocomplete = places({
     appId: "plUZWS470NUB",
     apiKey: "d8417e1882d8024fb43cf8a17e547c76",
-    container: document.querySelector("#address")
+    container: document.getElementsByClassName("input-address")[0]
   });
 
   placesAutocomplete.on("change", function (e) {
-    // Store address data
+    // Create object with location data
     addressData.city = e.suggestion.name || "";
+    addressData.state = e.suggestion.administrative || "";
     addressData.zip = e.suggestion.postcode || "";
     addressData.lat = e.suggestion.latlng.lat || "";
     addressData.lng = e.suggestion.latlng.lng || "";
-    /**
-
-        TODO:
-        - Make a Get request to DB using data (addressData)
-        - Load houses view page 
-
-    */
+    getHomesForSaleData(addressData.zip);
   });
-});
 
 /*=============================================
 =              Geolocation API            =
 =============================================*/
-$(function(){
-  var places = algoliasearch.initPlaces(
+  var locations = algoliasearch.initPlaces(
     "plUZWS470NUB",
     "d8417e1882d8024fb43cf8a17e547c76"
   );
@@ -39,34 +37,24 @@ $(function(){
   function getCurrentAddress(response) {
     var hits = response.hits;
     var suggestion = hits[0];
-
+    // Create object with location data
     if (suggestion && suggestion.locale_names && suggestion.city) {
       addressData.city = suggestion.city.default[0] || "";
+      addressData.state = suggestion.administrative[0] || "";
       addressData.zip = (suggestion.postcode || [])[0] || "";
       addressData.lat = (suggestion._geoloc.lat || "");
       addressData.lng = (suggestion._geoloc.lng || "");
-      console.log(addressData);
-      /**
-      
-          TODO:
-          - Make a Get request to DB using data (addressData)
-          - Load houses view page
-      
-      */
+      getHomesForSaleData(addressData.zip);
     }
   }
 
   var $button = document.getElementsByClassName("ap-icon-pin")[0];
-
   $button.addEventListener("click", function () {
-    $button.textContent = "Locating...";
-
     navigator.geolocation.getCurrentPosition(function (response) {
       var coords = response.coords;
       lat = coords.latitude.toFixed(6);
       lng = coords.longitude.toFixed(6);
-
-      places
+      locations
         .reverse({
           aroundLatLng: lat + "," + lng,
           hitsPerPage: 1
