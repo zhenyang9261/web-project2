@@ -1,17 +1,47 @@
 <div class="chat-window">
-    <header class="chat-nav-header">
-        <div class="chat-nav-button-container">
-            <button class="chat-nav-button red"></button>
-            <button class="chat-nav-button yellow"></button>
-            <button class="chat-nav-button green"></button>
-        </div>
-        <h5>Chat</h5>
-    </header>
-    <div class="chat-body">
-        <p>{{conversations}}</p>
+    <div class="chat-list-container">
+        {{#each conversations}}
+            {{#if @first}}
+            <div class="conversation-preview-display curr-chat" 
+                data-recipientId="{{this.recipientId}}">
+            {{else}}
+            <div class="conversation-preview-display" 
+                data-recipientId="{{this.recipientId}}">
+            {{/if}}
+                <p>{{this.recipientId}}</p>
+                {{#each this.messages}}
+                    {{#if @last}}
+                        <p>{{this.text}}</p>
+                    {{/if}}
+                {{/each}}
+            </div>
+        {{/each}}
     </div>
-    <form class="chat-typing-form" action="">
-        <input class="chat-input" type="text">
-        <input class="chat-submit" type="submit">
-    </form>
+    <div class="chat-container">
+        <header class="chat-nav-header">
+            <div class="chat-nav-button-container">
+                <button class="chat-nav-button red"></button>
+                <button class="chat-nav-button yellow"></button>
+                <button class="chat-nav-button green"></button>
+            </div>
+            <h5>Chat</h5>
+        </header>
+        <div class="chat-body">
+            {{#each conversations}}
+                {{#if @first}}
+                    {{#each this.messages}}
+                        {{#if this.isFromUser}}
+                            <p class="userText">{{this.text}}</p>
+                        {{else}}
+                            <p class="recipientText">{{this.text}}</p>
+                        {{/if}}
+                    {{/each}}
+                {{/if}}
+            {{/each}}
+        </div>
+        <form class="chat-typing-form" action="">
+            <input class="chat-input" type="text">
+            <input class="chat-submit" type="submit">
+        </form>
+    </div>
 </div>

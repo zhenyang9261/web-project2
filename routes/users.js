@@ -4,14 +4,11 @@ var router = express.Router();
 // importing Users model
 var User = require("../models").Users;
 var Message = require("../models").Messages;
+var UsersMessages = require("../models").UsersMessages;
 // importing jwt and bcrypt for auth and making salt rounds 10
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcrypt");
 const saltRounds = 10;
-// importing server and io from server.js for real-time
-// messaging
-var server = require("../server").server;
-var io = require("../server").io;
 
 router.post("/signup", (req, res) => {
     // checks to see if email already exists in the database
@@ -130,7 +127,6 @@ router.post("/login", (req, res) => {
         });
 });
 
-// currently only works if the user has one conversation
 function Conversation(senderId, recipientId) {
     this.senderId = senderId,
     this.recipientId = recipientId,
@@ -213,7 +209,6 @@ router.get("/chat", (req, res) => {
     })
     .then(rows => {
         let conversations = [];
-
         for(const row of rows) {
             let message = parseMessageRow(2, row);
             addMessageToConversations(message, conversations);
@@ -223,9 +218,9 @@ router.get("/chat", (req, res) => {
             const conv1Length = conv1.messages.length - 1;
             const conv2Length = conv1.messages.length - 1;
             return -(conv1.messages[conv1Length].createdAt - conv2.messages[conv2Length].createdAt);
-        })
-        res.json(conversations);
-        // res.render("chat", {conversations: conversations});
+        });
+
+        res.render("chat", {conversations: conversations});
     })
    
     .catch(err => {
@@ -233,5 +228,57 @@ router.get("/chat", (req, res) => {
     });
 
 });
+
+router.post("/chat/create-connection", (req, res) => {
+    client.set(req.body.id, req.body.socketId);
+})
+
+router.post("/chat", (req, res) => {
+    // grabbing our redis connection and sender socket id  
+    const client = req.app.get("client");
+    const socketId = req.body.connectionId;
+
+    // getting text and recipient id from request body
+    const text = req.body.text;
+    const recipientId = req.body.recipientId;
+    // querying redis for the recipient socket id sent over from our client
+    client.get(recipientId, (err, recipinetSocketId) => {
+        if(err) throw err
+        console.log(recipinetSocketId);
+        // adding the message to the messages table in our database
+        Message.create({
+            text: text, 
+            recipientId: recipientId
+        })
+        .then((createdMessage) => {
+            // using the created message id to 
+            UsersMessages.create({
+                userId: req.body.senderId, 
+                messageId: createdMessage.dataValues.id
+            })
+            .then(createdUserMessage => {
+                // checking to see if the socket id exists in redis (i.e. if the user 
+                // is currently on their chat page)
+                if(recipientSocketId) {    
+                    // grabbing our socket reference from app
+                    const socket = req.app.get('socket');
+                    // grabbing onto our recipient's socket server to send our message,
+                    // checking if it exists, and, if it does, sending the sender's 
+                    // text that we grabbed onto from the request body. 
+                    if(socket.sockets.connected[recipinetSocketId]) {
+                        const recipientSocket = socket.sockets.connected[recipinetSocketId];
+                
+                        recipientSocket.emit("message", {
+                            text: text, 
+                            senderId: 2
+                        });
+                    }
+                } 
+            });
+        })
+    })
+});
+
+
 
 module.exports = router;

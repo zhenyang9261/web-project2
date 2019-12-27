@@ -4,9 +4,15 @@ var exphbs = require("express-handlebars");
 
 var db = require("./models");
 
+var redis = require("redis");
+var client = redis.createClient();
+
+client.on("connect", () => {
+  app.set("client", client);
+});
+
 var app = express();
 var PORT = process.env.PORT || 3000;
-var server, io;
 
 // Middleware
 app.use(express.urlencoded({ extended: false }));
@@ -39,20 +45,22 @@ if (process.env.NODE_ENV === "test") {
 
 // Starting the server, syncing our models ------------------------------------/
 db.sequelize.sync(syncOptions).then(function() {
-  server = app.listen(PORT, function() {
+  var server = app.listen(PORT, function() {
     console.log(
       "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
       PORT,
       PORT
     );
-  });
-  
-  io = require('socket.io')(server);
-  app.use((req, res, next) => {
-    res.io = io;
-    next();
+
+    var io = require("socket.io");
+    var socket = io(server);
+    app.set("socket", socket);
+
+    socket.on('connect', socket => {
+      socket.emit('id', socket.id) 
+    })
   });
 
 });
 
-module.exports = {app: app, server: server, io: io};
+module.exports = app;
