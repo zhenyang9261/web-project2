@@ -1,15 +1,9 @@
 var db = require("../models");
+var path = require("path");
+var getHousesForSale = require("../public/js/getHomesData.js");
 
 module.exports = function(app) {
   // Load index page
-  app.get("/", function(req, res) {
-    db.Properties.findAll({}).then(function(dbProperties) {
-      res.render("index", {
-        msg: "Welcome!",
-        properties: dbProperties
-      });
-    });
-  });
 
   // Load property page and pass in a property by id
   app.get("/property/:id", function(req, res) {
@@ -20,6 +14,15 @@ module.exports = function(app) {
         property: dbProperty
       });
     });
+  });
+
+  app.get("/", function(req, res) {
+    res.render("index");
+  });
+
+  app.get("/houses/:zipcode", function(req, res) {
+    // Use zip code variable to call api and get house for sale data
+    getHousesForSale(req.params.zipcode, res);
   });
 
   // Render 404 page for any unmatched routes

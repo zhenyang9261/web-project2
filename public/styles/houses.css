@@ -1,0 +1,23 @@
+.save-home-button {
+	right: 0;
+	font-size: 24px;
+}
+
+.home-preview-card {
+	cursor: pointer;
+}
+
+/* Medium devices (tablets, 768px and down) */
+@media (max-width: 768px) {
+	.houses-side-header .container {
+		padding: 0;
+	}
+	#logo {
+		width: 80px;
+	}
+
+	.small-search-input .input-address {
+		height: 35px;
+		font-size: 14px;
+	}
+}

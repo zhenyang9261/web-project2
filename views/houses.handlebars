@@ -1,0 +1,204 @@
+<div class="container-fluid">
+    {{!-- Houses Page navbar --}}
+    <header class="houses-site-header">
+        <div class="container-fluid p-0">
+            <nav class="navbar navbar-expand-lg navbar-light p-0 mb-1 flex-nowrap" aria-label="Main navigation">
+                {{!-- Logo --}}
+                <a class="navbar-brand ml-2" href="/">
+                    <img id="logo" src="../img/logo.png" width="180" alt="Pillow Logo">
+                </a>
+                {{!-- Toggle button --}}
+                <button class="navbar-toggler mb-2 border-0" type="button" data-toggle="collapse"
+                    data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <i class="fas fa-bars fa-md"></i>
+                </button>
+                <div class="collapse navbar-collapse mt-5 mt-lg-2 mr-lg-5 p-3" id="navbarNav">
+                    <ul class="navbar-nav ml-auto text-left">
+                        {{!-- Login button --}}
+                        <li class="nav-item mr-3"><a class="nav-link text-dark font-weight-bolder" href="#">Login</a>
+                        </li>
+                        {{!-- Sign Up button --}}
+                        <li class="nav-item"><a class="btn btn-primary pl-0 pl-lg-3" href="#">Sign up</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <hr class="mt-n2 mt-lg-n4">
+            {{!-- Nav Search options --}}
+            <ul class="nav nav-pills mt-n2">
+                <li class="mr-2">
+                    {{!-- Search address input --}}
+                    <form class="small-search-input w-100">
+                        <div class="form-group">
+                            <input type="search" value="{{housesList.cityState}}" class="input-address form-control text-truncate pl-2"
+                                placeholder="Address, city or ZIP">
+                        </div>
+                    </form>
+                </li>
+                {{!-- Prince Range Dropdown menu --}}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle border border-primary rounded py-1 mr-1" data-toggle="dropdown"
+                        href="#" role="button" aria-haspopup="true" aria-expanded="false">Price</a>
+                    <div class="dropdown-menu p-2" style="width: 340px">
+                        <label>Price Range</label>
+                        <form class="w-100">
+                            <div class="form-row">
+                                {{!-- Minimum range price --}}
+                                <div class="col-6">
+                                    <input type="text" class="form-control" placeholder="Min">
+                                </div>
+                                {{!-- Maximum range price --}}
+                                <div class="col-6">
+                                    <input type="text" class="form-control" placeholder="Max">
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-sm ml-auto d-block mt-2">Done</button>
+                        </form>
+                    </div>
+                </li>
+                {{!-- Numbers of Bedrooms Selection --}}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle border border-primary rounded py-1 mr-1" data-toggle="dropdown"
+                        href="#" role="button" aria-haspopup="true" aria-expanded="false">Beds</a>
+                    <div class="dropdown-menu ml-n5 p-3">
+                        <form>
+                            <label>Bedrooms</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="anyBeds"
+                                    value="any" checked>
+                                <label class="form-check-label" for="anyBeds">Any</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="oneBed"
+                                    value="1">
+                                <label class="form-check-label" for="oneBed">1+</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="twoBeds"
+                                    value="2">
+                                <label class="form-check-label" for="twoBeds">2+</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="threeBeds"
+                                    value="3">
+                                <label class="form-check-label" for="threeBeds">3+</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="fourBeds"
+                                    value="4">
+                                <label class="form-check-label" for="fourBeds">4+</label>
+                            </div>
+                            <button class="btn btn-primary btn-sm ml-auto d-block">Done</button>
+                        </form>
+                    </div>
+                </li>
+                {{!-- Numbers of Bathrooms Selection --}}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle border border-primary rounded py-1 mr-1" data-toggle="dropdown"
+                        href="#" role="button" aria-haspopup="true" aria-expanded="false">Baths</a>
+                    <div class="dropdown-menu ml-n5 p-3">
+                        <form>
+                            <label>Bathrooms</label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="anyBath"
+                                    value="any" checked>
+                                <label class="form-check-label" for="anyBath">Any</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="oneBath"
+                                    value="1">
+                                <label class="form-check-label" for="oneBath">1+</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="twoBaths"
+                                    value="2">
+                                <label class="form-check-label" for="twoBaths">2+</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="threeBaths"
+                                    value="3">
+                                <label class="form-check-label" for="threeBaths">3+</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="fourBaths"
+                                    value="4">
+                                <label class="form-check-label" for="fourBaths">4+</label>
+                            </div>
+                            <button class="btn btn-primary btn-sm ml-auto d-block">Done</button>
+                        </form>
+                    </div>
+                </li>
+                {{!-- Save home to favorites --}}
+                <li class="ml-auto">
+                    <a class="nav-link" href="#">Save Search</a>
+                </li>
+            </ul>
+        </div>
+    </header>
+    {{!-- Main body page --}}
+    <div class="container-fluid border-top">
+        <div class="row">
+            {{!-- Google Maps --}}
+            <div class="col-md-6 d-none d-lg-block" data-target="#nav-profile">
+                <img alt="Bootstrap Image Preview" src="https://i.stack.imgur.com/8KmHl.png"
+                    class="img-fluid rounded" />
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+                <div class="d-flex mt-2">
+                    <p>Search results</p>
+                    <div class="dropdown ml-auto mt-1">
+                        {{!-- Sorting button --}}
+                        <button class="btn btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenu2"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Sort
+                        </button>
+                        {{!-- Sorting options --}}
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
+                            <button class="dropdown-item" type="button">Price(High to Low)</button>
+                            <button class="dropdown-item" type="button">Price(Low to High)</button>
+                        </div>
+                    </div>
+                </div>
+                {{!-- List of Houses --}}
+                <div class="row row-cols-1 row-cols-md-2">
+                    {{#each housesList.housesData}}
+                    <div class="col mb-4">
+                        <div class="card home-preview-card">
+                            {{!-- Save home to favorite list --}}
+                            <button type="button" class="btn btn-link position-absolute save-home-button" data-toggle="button" aria-pressed="false">
+                                <i class="far fa-heart text-white"></i>
+                            </button>
+                            <img src={{imgUrl}} class="card-img-top" alt="...">
+                            {{!-- Property preview details card --}}
+                            <div class="card-body">
+                                <ul class="list-unstyled list-inline">
+                                    {{!-- House Price --}}
+                                    <li class="list-inline-item">
+                                        <h5 class="card-title"><span>{{price}}</span></h5>
+                                    </li>
+                                    {{!-- Number of Bedrooms --}}
+                                    <li class="list-inline-item"><small
+                                            class="text-muted"><span>{{bedrooms}}</span>ba</small></li>
+                                    {{!-- Numbers of Bathrooms --}}
+                                    <li class="list-inline-item border-right border-left pr-2 pl-2"><small
+                                            class="text-muted"><span>{{bathrooms}}</span>bds</small></li>
+                                    {{!-- House square footage --}}
+                                    <li class="list-inline-item"><small
+                                            class="text-muted"><span>{{sqft}}</span>sqft</small></li>
+                                </ul>
+                                {{!-- House Address --}}
+                                <p class="card-text" id="house-address">{{address}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/index.js"></script>
+<script src="/js/houses.js"></script>
