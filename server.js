@@ -29,11 +29,14 @@ app.engine(
 app.set("view engine", "handlebars");
 
 // Routes
-// require("./routes/apiRoutes")(app);
-// require("./routes/htmlRoutes")(app);
+require("./routes/apiRoutes")(app);
+require("./routes/htmlRoutes")(app);
 
-var users = require("./routes/users.js");
-app.use("/users", users);
+var auth = require("./routes/auth");
+app.use("/", auth);
+
+var chat = require("./routes/chat");
+app.use("/users", chat);
 
 var syncOptions = { force: false };
 

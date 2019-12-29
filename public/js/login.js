@@ -1,27 +1,27 @@
-var form = document.querySelector(".login-form");
+document.addEventListener("DOMContentLoaded", function() {
 
-form.addEventListener("submit", (event) => {
-    event.preventDefault();
+    var form = document.querySelector(".login-form")
 
-    $.post("/users/login", {
-        email: form.elements[0].value, 
-        password: form.elements[1].value
-    })
-    .then(response => {
-        if(response.message === "Auth successful") {
-            localStorage.setItem("jwt", JSON.stringify(response.token));
-        }
-        console.log(response.token);
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
 
-        $.ajax({
-            type: "GET", 
-            url: "/users/chat",
-            headers: {
-                "token": response.token
+        $.post("/login", {
+            email: form.elements[0].value, 
+            password: form.elements[1].value
+        })
+        .then(response => {
+            if(response.message === "Auth successful") {
+                localStorage.setItem("jwt", JSON.stringify(response.token));
+                localStorage.setItem("name", response.name);
             }
-        });
+
+            
+            location.href = "/"
+           
+        })
+        .catch(err => {
+            console.log(err);
+        })
     })
-    .catch(err => {
-        console.log(err);
-    })
-})
+
+});

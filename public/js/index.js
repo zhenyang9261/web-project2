@@ -71,6 +71,21 @@ var $exampleDescription = $("#example-description");
 var $submitBtn = $("#submit");
 var $exampleList = $("#example-list");
 
+if(localStorage.getItem("name")) {
+  console.log("we got in here");
+  var loginButton = document.querySelector(".login-button");
+  var signUpButton = document.querySelector(".sign-up-button");
+
+  loginButton.style.display = "none";
+  signUpButton.style.display = "none";
+
+  var welcomeMessage = document.createElement("li");
+  welcomeMessage.textContent = "Welcome, " + localStorage.getItem("name") + "!";
+  
+  var authNavContainer = document.querySelector(".auth-nav-container");
+  authNavContainer.appendChild(welcomeMessage);
+}
+
 // // The API object contains methods for each kind of request we'll make
 // var API = {
 //   saveExample: function(example) {

@@ -3,8 +3,6 @@ var express = require("express");
 var router = express.Router();
 // importing Users model
 var User = require("../models").Users;
-var Message = require("../models").Messages;
-var UsersMessages = require("../models").UsersMessages;
 // importing jwt and bcrypt for auth and making salt rounds 10
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcrypt");
@@ -100,7 +98,7 @@ router.post("/login", (req, res) => {
                     const token = jwt.sign(
                     {
                         email: rows[0].email,
-                        userid: rows[0].Id
+                        id: rows[0].id
                     }, 
                     process.env.JWT_KEY, 
                     {
@@ -110,7 +108,8 @@ router.post("/login", (req, res) => {
                     // structure behind it
                     return res.status(200).json({
                         message: "Auth successful", 
-                        token: token
+                        token: token, 
+                        name: rows[0].firstName
                     });
                 }
 
@@ -127,157 +126,7 @@ router.post("/login", (req, res) => {
         });
 });
 
-function Conversation(senderId, recipientId) {
-    this.senderId = senderId,
-    this.recipientId = recipientId,
-    this.messages = [];
 
-    this.pushMessage = function(text, createdAt, isFromUser) {
-        this.messages.push({
-            text: text, 
-            createdAt: createdAt, 
-            isFromUser: isFromUser
-        });
-    }, 
-
-    this.sortMessages = function() {
-        return messages.sort((msg1, msg2) => msg1.createdAt - msg2.createdAt);
-    },
-
-    this.equals = function(obj) {
-        return this.senderId === obj.senderId && this.recipientId === obj.recipientId
-    }
-}
-
-function parseMessageRow(senderId, row) {
-    var message = {
-        text: row.dataValues.text, 
-        createdAt: row.dataValues.createdAt,
-        isFromUser: senderId === row.dataValues.Users[0].dataValues.id
-    }
-
-    if(senderId === row.dataValues.recipientId) {
-        message.senderId = row.dataValues.recipientId;
-        message.recipientId = row.dataValues.Users[0].dataValues.id
-    } else {
-        message.senderId = row.dataValues.Users[0].dataValues.id ;
-        message.recipientId = row.dataValues.recipientId;
-    }
-
-    return message;
-}
-
-function addMessageToConversations(message, conversations) {
-    if(conversations.length > 0) {
-        for(const conversation of conversations) {  
-            if(conversation.equals(message)) {
-                return conversation.pushMessage(
-                    message.text, 
-                    message.createdAt, 
-                    message.isFromUser
-                );
-            }
-        }
-    }
-    
-    let newConversation = new Conversation(message.senderId, message.recipientId);
-    newConversation.pushMessage(message.text, message.createdAt, message.isFromUser);
-
-    return conversations.push(newConversation);
-}
-
-router.get("/chat", (req, res) => {
-    Message.findAll({
-        attributes: ["recipientId", "text", "createdAt"],
-        include: [{
-            model: User, 
-            attributes: ["id"],
-            $or: [
-                {
-                    where: {id: 2}
-                }
-            ],
-            order: [
-                ["createdAt", "DESC"], 
-            ],
-        }], 
-        $or: [
-            {
-                where: {recipientId: 2}
-            }
-        ]
-    })
-    .then(rows => {
-        let conversations = [];
-        for(const row of rows) {
-            let message = parseMessageRow(2, row);
-            addMessageToConversations(message, conversations);
-        }
-
-        conversations.sort((conv1, conv2) => {
-            const conv1Length = conv1.messages.length - 1;
-            const conv2Length = conv1.messages.length - 1;
-            return -(conv1.messages[conv1Length].createdAt - conv2.messages[conv2Length].createdAt);
-        });
-
-        res.render("chat", {conversations: conversations});
-    })
-   
-    .catch(err => {
-        console.log(err);
-    });
-
-});
-
-router.post("/chat/create-connection", (req, res) => {
-    client.set(req.body.id, req.body.socketId);
-})
-
-router.post("/chat", (req, res) => {
-    // grabbing our redis connection and sender socket id  
-    const client = req.app.get("client");
-    const socketId = req.body.connectionId;
-
-    // getting text and recipient id from request body
-    const text = req.body.text;
-    const recipientId = req.body.recipientId;
-    // querying redis for the recipient socket id sent over from our client
-    client.get(recipientId, (err, recipinetSocketId) => {
-        if(err) throw err
-        console.log(recipinetSocketId);
-        // adding the message to the messages table in our database
-        Message.create({
-            text: text, 
-            recipientId: recipientId
-        })
-        .then((createdMessage) => {
-            // using the created message id to 
-            UsersMessages.create({
-                userId: req.body.senderId, 
-                messageId: createdMessage.dataValues.id
-            })
-            .then(createdUserMessage => {
-                // checking to see if the socket id exists in redis (i.e. if the user 
-                // is currently on their chat page)
-                if(recipientSocketId) {    
-                    // grabbing our socket reference from app
-                    const socket = req.app.get('socket');
-                    // grabbing onto our recipient's socket server to send our message,
-                    // checking if it exists, and, if it does, sending the sender's 
-                    // text that we grabbed onto from the request body. 
-                    if(socket.sockets.connected[recipinetSocketId]) {
-                        const recipientSocket = socket.sockets.connected[recipinetSocketId];
-                
-                        recipientSocket.emit("message", {
-                            text: text, 
-                            senderId: 2
-                        });
-                    }
-                } 
-            });
-        })
-    })
-});
 
 
 
