@@ -38,10 +38,12 @@ router.post("/signup", (req, res) => {
                 // adding realtor and owner/seller functionality)
                 } else {
                     User.create({
-                        email: req.body.email, 
                         firstName: req.body.firstName, 
                         lastName: req.body.lastName, 
-                        password: hash
+                        email: req.body.email, 
+                        phone: req.body.phone,
+                        password: hash, 
+                        type: req.body.type
                     })
                         // alerting user that they were created. Should 
                         // also prompt for login

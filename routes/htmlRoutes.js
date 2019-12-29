@@ -12,6 +12,10 @@ module.exports = function (app) {
     res.render("login");
   })
 
+  app.get("/signup", (req, res) => {
+    res.render("signup");
+  })
+
   app.get("/houses/:zipcode", function(req, res){
     // Use zip code variable to call api and get house for sale data
     getHousesForSale(req.params.zipcode, res);

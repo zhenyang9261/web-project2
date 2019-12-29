@@ -35,9 +35,6 @@ require("./routes/htmlRoutes")(app);
 var auth = require("./routes/auth");
 app.use("/", auth);
 
-var chat = require("./routes/chat");
-app.use("/users", chat);
-
 var syncOptions = { force: false };
 
 // If running a test, set syncOptions.force to true
