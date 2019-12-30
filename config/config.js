@@ -16,6 +16,7 @@ module.exports = {
   },
   production: {
     use_env_variable: "JAWSDB_URL",
+    use_redis_env_variable: "REDIS_URL",
     dialect: "mysql"
   }
 };

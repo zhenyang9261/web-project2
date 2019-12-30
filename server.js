@@ -4,8 +4,15 @@ var exphbs = require("express-handlebars");
 
 var db = require("./models");
 
+var env = process.env.NODE_ENV || "development";
+var config = require(__dirname + "/config/config.js")[env];
+
 var redis = require("redis");
-var client = redis.createClient();
+if (config.use_redis_env_variable) {
+  var client = redis.createClient(process.env[config.use_redis_env_variable]);
+} else {
+  var client = redis.createClient();
+}
 
 client.on("connect", () => {
   app.set("client", client);
@@ -56,11 +63,10 @@ db.sequelize.sync(syncOptions).then(function() {
     var socket = io(server);
     app.set("socket", socket);
 
-    socket.on('connect', socket => {
-      socket.emit('id', socket.id) 
-    })
+    socket.on("connect", socket => {
+      socket.emit("id", socket.id);
+    });
   });
-
 });
 
 module.exports = app;
