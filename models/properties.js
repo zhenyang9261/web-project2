@@ -88,13 +88,13 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-  //   Properties.associate = models => {
-  //     Properties.belongsToMany(models.Users, {
-  //       through: "Users_Properties",
-  //       foreignKey: "propertyId",
-  //       onDelete: "cascade"
-  //     });
-  //   };
+  Properties.associate = models => {
+    Properties.belongsToMany(models.Users, {
+      through: "UsersProperties",
+      foreignKey: "propertyId",
+      onDelete: "cascade"
+    });
+  };
 
   return Properties;
 };
