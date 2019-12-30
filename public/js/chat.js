@@ -1,9 +1,20 @@
 var createText = document.querySelector(".chat-typing-form");
-
 const socket = io().connect();
-console.log(socket);
+var currChat = document.querySelector(".curr-chat");
+var chatBody = document.querySelector(".chat-body");
 
-currChat = document.querySelector(".curr-chat");
+function displayMessage(text, isUserText) {
+    const newText = document.createElement("p");
+    newText.textContent = text;
+    
+    if(isUserText) {
+        newText.classList.add("userTest")
+    } else {
+        newText.classList.add("recipientText");
+    }
+
+    chatBody.appendChild(newText);
+}
 
 socket.on("connect", () => {
     console.log("we get in the connection");
@@ -27,12 +38,12 @@ socket.on("connect", () => {
 });
 
 socket.on("message", message => {
-    console.log({message});
+    displayMessage(message.text, false);
 })
 
 createText.addEventListener("submit", event => {
     event.preventDefault();
-
+    
     $.ajax({
         url: "/users/chat", 
         method: "POST", 
