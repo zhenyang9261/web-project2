@@ -8,6 +8,7 @@ CREATE TABLE Users(
     password VARCHAR(255) NOT NULL,
     firstName VARCHAR(40), 
     lastName VARCHAR(40), 
+    phone VARCHAR(40), 
     PRIMARY KEY(Id)
 );
 
@@ -28,9 +29,10 @@ CREATE TABLE Properties(
 );
 
 CREATE TABLE Users_Properties(
+    Id INT NOT NULL AUTO_INCREMENT,
 	userId INT NOT NULL, 
     propertyId INT NOT NULL, 
     FOREIGN KEY(userId) REFERENCES Users(Id) ON DELETE CASCADE, 
     FOREIGN KEY(propertyId) REFERENCES Properties(Id) ON DELETE CASCADE, 
-    PRIMARY KEY(userId, propertyId)
+    PRIMARY KEY(Id)
 );
