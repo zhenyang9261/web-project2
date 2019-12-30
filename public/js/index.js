@@ -71,20 +71,55 @@ var $exampleDescription = $("#example-description");
 var $submitBtn = $("#submit");
 var $exampleList = $("#example-list");
 
-if(localStorage.getItem("name")) {
-  console.log("we got in here");
-  var loginButton = document.querySelector(".login-button");
-  var signUpButton = document.querySelector(".sign-up-button");
+/*=============================================
+=  Working with login and logout functionality  =
+  =============================================*/
+var chatButton = document.querySelector(".chat-button");
+var logoutButton = document.querySelector(".logout-button");
 
-  loginButton.style.display = "none";
-  signUpButton.style.display = "none";
+function getLoggedInElements() {
+  const loggedInElems = document.getElementsByClassName("logged-in");
+  const loggedOutElems = document.getElementsByClassName("logged-out");
 
-  var welcomeMessage = document.createElement("li");
-  welcomeMessage.textContent = "Welcome, " + localStorage.getItem("name") + "!";
-  
-  var authNavContainer = document.querySelector(".auth-nav-container");
-  authNavContainer.appendChild(welcomeMessage);
+  for(const loggedInElem of loggedInElems) {
+    loggedInElem.getElementsByClassName.display = "inline-block";
+  }
+
+  for(const loggedOut of loggedOutElems) {
+    loggedOut.style.display = "none";
+  }
 }
+
+function getLoggedOutElems() {
+  const loggedInElems = document.getElementsByClassName("logged-in");
+  const loggedOutElems = document.getElementsByClassName("logged-out");
+
+  for(const loggedInElem of loggedInElems) {
+    loggedInElem.style.display = "none";
+  }
+
+  for(const loggedOut of loggedOutElems) {
+    loggedOut.style.display = "inline-block";
+  }
+}
+
+if(localStorage.getItem("jwt")) {
+  getLoggedInElements();
+} else {
+  getLoggedOutElems();
+}
+
+
+logoutButton.addEventListener("click", event => {
+  localStorage.removeItem("jwt");
+  location.reload();
+});
+
+chatButton.addEventListener("click", event => {
+    event.preventDefault();
+
+    location.href = "/users/chat?token=" + localStorage.getItem("jwt");
+})
 
 // // The API object contains methods for each kind of request we'll make
 // var API = {
