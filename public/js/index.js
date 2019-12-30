@@ -1,11 +1,11 @@
-$(function(){
+$(function() {
   // Variable will be use to store details of input address: City's name, State, postal code, latitude and longitude.
   var addressData = {};
 
   //Loads route => /houses/:zipcode
-  let getHomesForSaleData = function (zipcode) {
+  let getHomesForSaleData = function(zipcode) {
     window.location.href = "/houses/" + zipcode;
-  }
+  };
 
   /*=============================================
   =        Autocomplete Places Search           =
@@ -16,7 +16,7 @@ $(function(){
     container: document.getElementsByClassName("input-address")[0]
   });
 
-  placesAutocomplete.on("change", function (e) {
+  placesAutocomplete.on("change", function(e) {
     // Create object with location data
     addressData.city = e.suggestion.name || "";
     addressData.state = e.suggestion.administrative || "";
@@ -26,7 +26,7 @@ $(function(){
     getHomesForSaleData(addressData.zip);
   });
 
-/*=============================================
+  /*=============================================
 =              Geolocation API            =
 =============================================*/
   var locations = algoliasearch.initPlaces(
@@ -42,15 +42,15 @@ $(function(){
       addressData.city = suggestion.city.default[0] || "";
       addressData.state = suggestion.administrative[0] || "";
       addressData.zip = (suggestion.postcode || [])[0] || "";
-      addressData.lat = (suggestion._geoloc.lat || "");
-      addressData.lng = (suggestion._geoloc.lng || "");
+      addressData.lat = suggestion._geoloc.lat || "";
+      addressData.lng = suggestion._geoloc.lng || "";
       getHomesForSaleData(addressData.zip);
     }
   }
 
   var $button = document.getElementsByClassName("ap-icon-pin")[0];
-  $button.addEventListener("click", function () {
-    navigator.geolocation.getCurrentPosition(function (response) {
+  $button.addEventListener("click", function() {
+    navigator.geolocation.getCurrentPosition(function(response) {
       var coords = response.coords;
       lat = coords.latitude.toFixed(6);
       lng = coords.longitude.toFixed(6);
@@ -64,39 +64,46 @@ $(function(){
   });
 });
 
-
 // Get references to page elements
-var $exampleText = $("#example-text");
-var $exampleDescription = $("#example-description");
-var $submitBtn = $("#submit");
-var $exampleList = $("#example-list");
+var $getFavoritesBtn = $("#get-favorites");
 
 // The API object contains methods for each kind of request we'll make
 var API = {
-  saveExample: function(example) {
+  saveFavorites: function(favorite) {
     return $.ajax({
       headers: {
         "Content-Type": "application/json"
       },
       type: "POST",
-      url: "api/examples",
-      data: JSON.stringify(example)
+      url: "api/favorites",
+      data: JSON.stringify(favorite)
     });
   },
-  getExamples: function() {
+  getFavorites: function() {
     return $.ajax({
-      url: "api/examples",
+      url: "api/favorites",
       type: "GET"
     });
   },
-  deleteExample: function(id) {
+  deleteFavorite: function(id) {
     return $.ajax({
-      url: "api/examples/" + id,
+      url: "api/favorites/" + id,
       type: "DELETE"
     });
   }
 };
 
+// When Saved Favorites button is clicked
+var handleGetFavoritesBtn = function() {
+  $.get("/api/favorites", function(data) {
+    favorites = data;
+    for (var i = 0; i < favorites.length; i++) {
+      console.log(
+        "\nfavorites " + i + "-------------- \n" + favorites[i].userId
+      );
+    }
+  });
+};
 // refreshExamples gets new examples from the db and repopulates the list
 var refreshExamples = function() {
   API.getExamples().then(function(data) {
@@ -162,5 +169,4 @@ var handleDeleteBtnClick = function() {
 };
 
 // Add event listeners to the submit and delete buttons
-$submitBtn.on("click", handleFormSubmit);
-$exampleList.on("click", ".delete", handleDeleteBtnClick);
+$getFavoritesBtn.on("click", handleGetFavoritesBtn);

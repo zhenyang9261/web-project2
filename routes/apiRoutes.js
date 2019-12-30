@@ -20,6 +20,14 @@ module.exports = function(app) {
     });
   });
 
+  // Get all favorites
+  app.get("/api/favorites", function(req, res) {
+    db.Users_Properties.findAll({}).then(function(dbFavorites) {
+      //console.log(dbFavorites[0].userId);
+      res.json(dbFavorites);
+    });
+  });
+
   // Create a new favorite
   app.post("/api/favorites", function(req, res) {
     console.log(req.body);
@@ -34,14 +42,14 @@ module.exports = function(app) {
     });
   });
 
-  // Delete a favorite property by id
-  // app.delete("/api/favorites/:id", function(req, res) {
-  //   db.Favorites.destroy({ where: { id: req.params.id } }).then(function(
-  //     dbFavorite
-  //   ) {
-  //     res.json(dbFavorite);
-  //   });
-  // });
+  // Delete a favorite property by property id
+  app.delete("/api/favorites/:propertyId", function(req, res) {
+    db.Users_Properties.destroy({
+      where: { propertyId: req.params.propertyId }
+    }).then(function(dbFavorite) {
+      res.json(dbFavorite);
+    });
+  });
 
   /*
    * Function to compose a JSON object for sequelize where query
