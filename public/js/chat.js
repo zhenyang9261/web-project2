@@ -3,6 +3,37 @@ const socket = io().connect();
 var currChat = document.querySelector(".curr-chat");
 var chatBody = document.querySelector(".chat-body");
 
+var conversations = document.getElementsByClassName("conversation-preview-display");
+var recipientIds = [];
+var  q;
+for(const conv of conversations) {
+    recipientIds.push(conv.dataset.recipientid);
+    console.log(recipientIds);
+}
+var arr = encodeURIComponent(JSON.stringify(recipientIds));
+
+$.ajax({
+    url: "/users/chat/contacts/" + arr, 
+    method: "GET", 
+})
+.then(response => {
+    q = response;
+    for(const recipient of response) {
+        let currId = "recipient-id-" + recipient.id;
+        let currInitialsId = "recipient-initials-" + recipient.id;
+
+        let currDisplay = document.getElementById(currId);
+        let currInitials = document.getElementById(currInitialsId);
+
+        currDisplay.textContent = recipient.firstName + " " + recipient.lastName;
+        currInitials.textContent = recipient.firstName[0] + recipient.lastName[0];
+    } 
+})
+.catch(err => {
+    console.log(err);
+})
+
+
 function displayMessage(text, isUserText) {
     const newText = document.createElement("p");
     newText.textContent = text;
@@ -63,4 +94,4 @@ createText.addEventListener("submit", event => {
         console.log(err);
     })
 
-})
+});

@@ -4,6 +4,8 @@ USE Pillow;
 CREATE TABLE Users(
 	Id INT NOT NULL AUTO_INCREMENT,
     email VARCHAR(255) NOT NULL UNIQUE,
+    -- adding phone number
+    phone VARCHAR(11),
     -- changing length of password to the length of the hash
     password VARCHAR(60) NOT NULL,
     firstName VARCHAR(40), 

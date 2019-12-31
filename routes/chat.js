@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 var checkAuth = require("./check-auth");
+var Sequelize = require("sequelize")
+const Op = Sequelize.Op;
 
 
 
@@ -58,15 +60,16 @@ function addMessageToConversations(message, conversations) {
                 return conversation.pushMessage(
                     message.text, 
                     message.createdAt, 
-                    message.isFromUser
+                    message.isFromUser, 
+        
                 );
             }
         }
     }
-    
+        
     let newConversation = new Conversation(message.senderId, message.recipientId);
     newConversation.pushMessage(message.text, message.createdAt, message.isFromUser);
-
+    
     return conversations.push(newConversation);
 }
 
@@ -94,13 +97,40 @@ router.get("/chat", checkAuth, (req, res) => {
                 return -(conv1.messages[conv1Length].createdAt - conv2.messages[conv2Length].createdAt);
             });
         }
-           
+
         res.render("chat", {conversations: conversations});
     })
     .catch(err => {
         console.log(err);
     })
 });
+
+router.get("/chat/contacts/:recipientIds", (req, res) => {
+    console.log(req.params);
+    const recipientIds = JSON.parse(req.params.recipientIds);
+    var recipients = [];
+
+    User.findAll({where: 
+        {
+            id: {
+                [Op.in]: recipientIds
+            }
+        }
+    })
+    .then(rows => {
+        for(const row of rows) {
+            let newRecipient = {
+                id: row.id, 
+                firstName: row.firstName, 
+                lastName: row.lastName
+            }
+
+            recipients.push(newRecipient);
+        }
+
+        res.status(201).json(recipients);
+    })
+})
 
 router.post("/chat/create-connection", checkAuth, (req, res) => {
     const client = req.app.get("client");
