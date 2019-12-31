@@ -98,14 +98,15 @@ var API = {
 
 // When Saved Favorites button is clicked
 var handleGetFavoritesBtn = function() {
-  $.get("/api/favorites/1", function(data) {
-    favorites = data;
-    for (var i = 0; i < favorites.length; i++) {
-      console.log(
-        "\nfavorites " + i + "-------------- \n" + favorites[i].street
-      );
-    }
-  });
+  // $.get("/api/favorites/1", function(data) {
+  //   favorites = data;
+  //   for (var i = 0; i < favorites.length; i++) {
+  //     console.log(
+  //       "\nfavorites " + i + "-------------- \n" + favorites[i].street
+  //     );
+  //   }
+  // });
+  window.location.href = "/api/favorites/1";
 };
 // Add event listeners to the submit and delete buttons
 $getFavoritesBtn.on("click", handleGetFavoritesBtn);
