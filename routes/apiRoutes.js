@@ -11,6 +11,17 @@ module.exports = function(app) {
     });
   });
 
+  // Get one property based on id
+  app.get("/api/properties/:id", function(req, res) {
+    db.Properties.findOne({
+      where: {
+        Id: req.params.id
+      }
+    }).then(function(dbProperties) {
+      res.json(dbProperties);
+    });
+  });
+
   // Get all properties based on search criteria
   app.get("/api/properties/:params", function(req, res) {
     var where = queryToJson(req.params.params);
@@ -20,17 +31,33 @@ module.exports = function(app) {
     });
   });
 
-  // Get all favorites
-  app.get("/api/favorites", function(req, res) {
-    db.Users_Properties.findAll({}).then(function(dbFavorites) {
-      //console.log(dbFavorites[0].userId);
-      res.json(dbFavorites);
+  // Get all favorites of the user
+  app.get("/api/favorites/:userId", function(req, res) {
+    db.Users_Properties.findAll({
+      where: {
+        userId: req.params.userId
+      }
+    }).then(function(dbFavorites) {
+      var properties = [];
+      for (var i = 0; i < dbFavorites.length; i++) {
+        console.log(dbFavorites[0].propertyId);
+        // Get property info from Properties table and compose the object to pass to favorite handlebar
+        db.Properties.findOne({
+          where: {
+            id: dbFavorites[0].propertyId
+          }
+        }).then(function(dbProperty) {
+          var property = { street: dbProperty.street };
+          properties.push(property);
+        });
+      }
+      console.log(properties);
+      res.json(properties);
     });
   });
 
   // Create a new favorite
   app.post("/api/favorites", function(req, res) {
-    console.log(req.body);
     // create takes an argument of an object describing the item we want to
     // insert into our table. In this case we just we pass in an object with a user id and a property id
     db.Users_Properties.create({
@@ -38,6 +65,7 @@ module.exports = function(app) {
       propertyId: req.body.propertyId
     }).then(function(dbFavorites) {
       // We have access to the new favorite as an argument inside of the callback function
+      console.log(dbFavorites.id);
       res.json(dbFavorites);
     });
   });

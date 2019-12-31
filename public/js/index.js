@@ -98,11 +98,11 @@ var API = {
 
 // When Saved Favorites button is clicked
 var handleGetFavoritesBtn = function() {
-  $.get("/api/favorites", function(data) {
+  $.get("/api/favorites/1", function(data) {
     favorites = data;
     for (var i = 0; i < favorites.length; i++) {
       console.log(
-        "\nfavorites " + i + "-------------- \n" + favorites[i].userId
+        "\nfavorites " + i + "-------------- \n" + favorites[i].street
       );
     }
   });
