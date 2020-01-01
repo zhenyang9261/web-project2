@@ -1,17 +1,17 @@
 <div class="chat-window">
     <div class="chat-nav-container">
         <div class="chat-nav-header">
-            <header class="chat-nav-header">
-            </header>
+                <input class="search-bar" type="text" placeholder="Search">
+                <button class="create-new-chat">></button>
         </div>
         <div class="chat-list-container">
         {{#each conversations}}
             {{#if @first}}
             <div class="conversation-preview-display curr-chat" 
-                data-recipientId="{{this.recipientId}}">
+                data-recipientId="{{this.recipientId}}" data-texts="{{getJSONAsString this.messages}}">
             {{else}}
             <div class="conversation-preview-display" 
-                data-recipientId="{{this.recipientId}}">
+                data-recipientId="{{this.recipientId}}" data-texts="{{getJSONAsString this.messages}}">
             {{/if}}
                 <div class="recipient-initials-display-container">
                     <div class="recipient-initials-display">
@@ -34,9 +34,11 @@
         </div>
     </div>
     <div class="chat-main">
-        <div class="chat-nav-header">
-            <header class="chat-nav-header">
-            </header>
+        <div class="chat-nav-header main-chat-header">
+            <div id="main-chat-initials-display" class="recipient-initials-display">
+                <p class="initials">ZY</p>
+            </div>
+            <button id="more-details-button">Details</button>
         </div>
         <div class="chat-container">
             <div class="chat-body">
@@ -56,10 +58,8 @@
                 {{/each}}
             </div>
             <form class="chat-typing-form">
-                {{!-- <form class="" action=""> --}}
                     <input class="chat-input" type="text">
                     <input class="chat-submit" type="submit" value="^">
-                {{!-- </form> --}}
             </form>
             
         </div>

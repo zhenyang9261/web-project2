@@ -10,6 +10,10 @@ module.exports = {
 
         return getTime(date);
         
+    }, 
+
+    getJSONAsString: function(json) {
+        return JSON.stringify(json);
     }
 }
 

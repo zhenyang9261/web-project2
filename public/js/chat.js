@@ -5,11 +5,23 @@ var chatBody = document.querySelector(".chat-body");
 
 var conversations = document.getElementsByClassName("conversation-preview-display");
 var recipientIds = [];
-var  q;
+
+function displayMessages(messages) {
+    messages = JSON.parse(messages);
+
+    while(chatBody.firstChild) {
+        chatBody.removeChild(chatBody.firstChild);
+    }
+
+    for(const message of messages) {
+        displayMessage(message.text, message.isFromUser);
+    }
+}
+
 for(const conv of conversations) {
     recipientIds.push(conv.dataset.recipientid);
-    console.log(recipientIds);
 }
+
 var arr = encodeURIComponent(JSON.stringify(recipientIds));
 
 $.ajax({
@@ -17,7 +29,6 @@ $.ajax({
     method: "GET", 
 })
 .then(response => {
-    q = response;
     for(const recipient of response) {
         let currId = "recipient-id-" + recipient.id;
         let currInitialsId = "recipient-initials-" + recipient.id;
@@ -56,8 +67,6 @@ function displayMessage(text, isUserText) {
 }
 
 socket.on("connect", () => {
-    console.log("we get in the connection");
-    console.log(socket.id);
     $.ajax({
         url: "/users/chat/create-connection", 
         method: "POST",
@@ -96,7 +105,6 @@ createText.addEventListener("submit", event => {
         }
     })
     .then(response => {
-        console.log(response);
         displayMessage(createText.elements[0].value, true);
     })
     .catch(err => {
@@ -104,3 +112,20 @@ createText.addEventListener("submit", event => {
     })
 
 });
+
+for(const conversationDisplay of conversations) {
+    conversationDisplay.addEventListener("click", event => {
+        var display = event.target;
+
+        while(display.classList[0] != "conversation-preview-display") {
+            display = display.parentNode;
+        }
+
+        currChat.classList.remove("curr-chat");
+
+        currChat = display;
+        currChat.classList.add("curr-chat");
+
+        displayMessages(currChat.dataset['texts']);
+    })
+}

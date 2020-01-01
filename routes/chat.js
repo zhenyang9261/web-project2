@@ -135,7 +135,7 @@ router.get("/chat/contacts/:recipientIds", (req, res) => {
 router.post("/chat/create-connection", checkAuth, (req, res) => {
     const client = req.app.get("client");
     client.set(req.token.id, req.body.socketId);
-    console.log(req.token.id);
+
     client.get(req.token.id, (err, res) => console.log(res));
 })
 

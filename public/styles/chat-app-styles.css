@@ -22,10 +22,33 @@ h5 {
 .chat-nav-header {
     background-color: white;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
+    align-items: flex-end;
     height: 10%;
-    padding: 2.5px;
+    padding: 20px 10px 10px 10px;
     border-bottom: 0.5px solid rgb(200, 200, 200)
+}
+
+.search-bar {
+    width: 70%;
+    height: 25px;
+    border-radius: 4px;
+    padding: 2.5px 5px;
+    font-size: 12px;
+    font-weight: 300px;
+    border: 0.5px solid rgb(175, 175, 175);
+}
+
+.create-new-chat {
+    text-align: center;
+    font-size: 8px;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: none;
+    padding: 4px;
+    background-color: rgb(100, 100, 230);
+    color: white;
 }
 
 .chat-list-container {
@@ -37,12 +60,22 @@ h5 {
     background-color: white;
 }
 
+.curr-chat {
+    background-color: rgba(100, 100, 230, 0.5);
+    border: 0.75px solid rgba(22, 22, 22, 0.8);
+}
+
 .conversation-preview-display {
     width: 100%;
     height: 75px;
     display: flex;
     padding: 5px;
     border-bottom: 0.5px solid rgb(200, 200, 200);
+}
+
+.conversation-preview-display:hover {
+    opacity: 0.6;
+    border: 1px solid rgb(100, 100, 230);
 }
 
 .recipient-initials-display-container {
@@ -56,7 +89,7 @@ h5 {
     width: 50px;
     height: 50px;
     font-size: 20px;
-    background-color: rgb(225, 225, 225);
+    background-color: rgb(215, 215, 215);
     color: white;
     border-radius: 50%;
     display: flex;
@@ -90,6 +123,27 @@ h5 {
     font-size: 12px;
     font-weight: 300;
     color: rgba(125, 125, 125, 0.9)
+}
+
+.main-chat-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+#main-chat-initials-display {
+    width: 40px;
+    height: 40px;
+}
+
+#more-details-button {
+    font-size: 10px;
+    text-decoration: none;
+    background-color: transparent;
+    color: rgb(100, 100, 230);
+    border: none;
 }
 
 .chat-main {
