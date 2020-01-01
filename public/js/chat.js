@@ -36,15 +36,23 @@ $.ajax({
 
 function displayMessage(text, isUserText) {
     const newText = document.createElement("p");
+    const textContainer = document.createElement("div");
+
     newText.textContent = text;
-    
+    newText.classList.add("text");
+
     if(isUserText) {
-        newText.classList.add("userTest")
+        newText.classList.add("user-text");
+        textContainer.classList.add("user-text-container");
     } else {
-        newText.classList.add("recipientText");
+        newText.classList.add("recipient-text");
+        textContainer.classList.add("recipient-text-container");
     }
 
-    chatBody.appendChild(newText);
+    textContainer.appendChild(newText);
+    chatBody.appendChild(textContainer);
+
+    createText.elements[0].value = "";
 }
 
 socket.on("connect", () => {
@@ -89,6 +97,7 @@ createText.addEventListener("submit", event => {
     })
     .then(response => {
         console.log(response);
+        displayMessage(createText.elements[0].value, true);
     })
     .catch(err => {
         console.log(err);

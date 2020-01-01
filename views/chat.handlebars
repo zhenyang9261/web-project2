@@ -34,24 +34,34 @@
         </div>
     </div>
     <div class="chat-main">
+        <div class="chat-nav-header">
+            <header class="chat-nav-header">
+            </header>
+        </div>
         <div class="chat-container">
             <div class="chat-body">
                 {{#each conversations}}
                     {{#if @first}}
                         {{#each this.messages}}
                             {{#if this.isFromUser}}
-                                <p class="userText">{{this.text}}</p>
+                                <div class="user-text-container">
+                                    <p class="user-text text">{{this.text}}</p>
                             {{else}}
-                            <p class="recipientText">{{this.text}}</p>
+                                <div class="recipient-text-container">
+                                    <p class="recipient-text text">{{this.text}}</p>
                             {{/if}}
+                            </div>
                         {{/each}}
                     {{/if}}
                 {{/each}}
             </div>
-            <form class="chat-typing-form" action="">
-                <input class="chat-input" type="text">
-                <input class="chat-submit" type="submit">
+            <form class="chat-typing-form">
+                {{!-- <form class="" action=""> --}}
+                    <input class="chat-input" type="text">
+                    <input class="chat-submit" type="submit" value="^">
+                {{!-- </form> --}}
             </form>
+            
         </div>
     </div>
     

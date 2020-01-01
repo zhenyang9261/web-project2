@@ -180,6 +180,10 @@ router.post("/chat", checkAuth, (req, res) => {
                     });
                 }                 
             });
+
+            res.status(201).json({
+                message: "message sent"
+            });
         })
     })
 });
