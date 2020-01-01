@@ -5,7 +5,7 @@
             <nav class="navbar navbar-expand-lg navbar-light p-0 mb-1 flex-nowrap" aria-label="Main navigation">
                 {{!-- Logo --}}
                 <a class="navbar-brand ml-2" href="/">
-                    <img id="logo" src="../img/logo.png" width="180" alt="Pillow Logo">
+                    <img id="logo" src="/img/logo.png" width="180" alt="Pillow Logo">
                 </a>
                 {{!-- Toggle button --}}
                 <button class="navbar-toggler mb-2 border-0" type="button" data-toggle="collapse"
@@ -35,7 +35,7 @@
 
                 {{!-- List of Houses --}}
                 <div class="row row-cols-1 row-cols-md-2">
-                    {{#each propertyList.Properties}}
+                    {{#each propertyList}}
                     <div class="col mb-4">
                         <div class="card home-preview-card">
                             {{!-- Save home to favorite list --}}

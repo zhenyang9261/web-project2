@@ -87,6 +87,9 @@ module.exports = function(sequelize, DataTypes) {
         validate: {
           isDate: true
         }
+      },
+      picURL: {
+        type: DataTypes.STRING
       }
     },
     { timestamps: false }

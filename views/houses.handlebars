@@ -172,23 +172,23 @@
                                 data-toggle="button" aria-pressed="false">
                                 <i class="far fa-heart text-white"></i>
                             </button>
-                            <img src={{imgUrl}} class="card-img-top" alt="...">
+                            <img id="pic-url" src={{imgUrl}} class="card-img-top" alt="...">
                             {{!-- Property preview details card --}}
                             <div class="card-body">
                                 <ul class="list-unstyled list-inline">
                                     {{!-- House Price --}}
                                     <li class="list-inline-item">
-                                        <h5 class="card-title"><span>{{price}}</span></h5>
+                                        <h5 class="card-title"><span id="price">{{price}}</span></h5>
                                     </li>
                                     {{!-- Number of Bedrooms --}}
-                                    <li class="list-inline-item"><small
-                                            class="text-muted"><span>{{bedrooms}}</span>ba</small></li>
+                                    <li class="list-inline-item"><small class="text-muted"><span
+                                                id="bedrooms">{{bedrooms}}</span>ba</small></li>
                                     {{!-- Numbers of Bathrooms --}}
                                     <li class="list-inline-item border-right border-left pr-2 pl-2"><small
-                                            class="text-muted"><span>{{bathrooms}}</span>bds</small></li>
+                                            class="text-muted"><span id="bathrooms">{{bathrooms}}</span>bds</small></li>
                                     {{!-- House square footage --}}
-                                    <li class="list-inline-item"><small
-                                            class="text-muted"><span>{{sqft}}</span>sqft</small></li>
+                                    <li class="list-inline-item"><small class="text-muted"><span
+                                                id="sqft">{{sqft}}</span></small></li>
                                 </ul>
                                 {{!-- House Address --}}
                                 <p class="card-text" id="house-address">{{address}}

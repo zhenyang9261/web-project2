@@ -31,33 +31,25 @@ module.exports = function(app) {
     });
   });
 
-  // // Get all favorites of the user
-  // app.get("/api/favorites/:userId", function(req, res) {
-  //   db.Users_Properties.findAll({
-  //     where: {
-  //       userId: req.params.userId
-  //     }
-  //   }).then(function(dbFavorites) {
-  //     var conditions = [];
-  //     for (var i = 0; i < dbFavorites.length; i++) {
-  //       // Compose the where clause conditions
-  //       var condition = { id: dbFavorites[i].propertyId };
-  //       conditions.push(condition);
-  //     }
-
-  //     // Find properties and pass to favorites handlebar
-  //     db.Properties.findAll({
-  //       where: {
-  //         [Op.or]: conditions
-  //       }
-  //     }).then(function(dbProperties) {
-  //       //res.json(dbProperties);
-  //       //console.log(dbProperties);
-
-  //       res.render("favorites", { propertyList: dbProperties });
-  //     });
-  //   });
-  // });
+  // Create a new property
+  app.post("/api/property", function(req, res) {
+    // create takes an argument of an object describing the item we want to
+    // insert into our table. In this case we just we pass in an object with a user id and a property id
+    db.Properties.create({
+      street: req.body.street,
+      city: req.body.city,
+      zipCode: req.body.zipCode,
+      numBeds: req.body.numBeds,
+      numBathrooms: req.body.numBathrooms,
+      sqf: req.body.sqf,
+      price: req.body.price,
+      picURL: req.body.picURL,
+      latitude: 35, // required field, dummy value
+      longitude: -75 // required field, dummy value
+    }).then(function(dbProperty) {
+      res.json(dbProperty);
+    });
+  });
 
   // Create a new favorite
   app.post("/api/favorites", function(req, res) {

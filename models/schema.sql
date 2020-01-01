@@ -38,6 +38,7 @@ CREATE TABLE Properties(
     -- adding date the property was last sold and the price it was last sold for
     lastSoldPrice FLOAT,
     lastSoldDate DATE,
+    picURL VARCHAR(255),
     PRIMARY KEY(Id)
 );
 
