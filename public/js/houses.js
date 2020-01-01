@@ -5,13 +5,16 @@ $(function() {
     let button = $(this).children();
     button.toggleClass("font-weight-bold");
 
+    var id = $(this).attr("id");
+    console.log("id: " + id);
     // Get values from the elements
-    var picURL = $("#pic-url").attr("src");
-    var address = $("#house-address").text();
-    var numBeds = $("#bedrooms").text();
-    var numBathrooms = $("#bathrooms").text();
-    var sqf = $("#sqft").text();
-    var price = $("#price").text();
+    var picURL = $("#pic-url-" + id).attr("src");
+    var address = $("#house-address-" + id).text();
+    var numBeds = $("#bedrooms-" + id).text();
+    var numBathrooms = $("#bathrooms-" + id).text();
+    var sqf = $("#sqft-" + id).text();
+    var price = $("#price-" + id).text();
+    console.log(numBeds + " " + address);
 
     // Conversions to match database table constraints
     // Get street, city, zip from address;
@@ -29,9 +32,13 @@ $(function() {
     numBathrooms = parseInt(numBathrooms);
 
     // Remove text part of the sqf and comma, then convert to integer
-    var index = sqf.indexOf("sq");
-    sqf = sqf.substring(0, index - 1);
-    sqf = parseInt(sqf.replace(/,/g, ""));
+    if (sqf) {
+      var index = sqf.indexOf("sq");
+      sqf = sqf.substring(0, index).trim();
+      sqf = parseInt(sqf.replace(/,/g, ""));
+    } else {
+      sqf = 0;
+    }
 
     var property = {};
     property["street"] = street;
@@ -42,6 +49,7 @@ $(function() {
     property["sqf"] = sqf;
     property["picURL"] = picURL;
     property["price"] = price;
+
     console.log(property);
 
     $.post("/api/property", property, function(data) {

@@ -44,8 +44,7 @@ module.exports = function(app) {
           [Op.or]: conditions
         }
       }).then(function(dbProperties) {
-        //res.json(dbProperties);
-        //console.log(dbProperties);
+        console.log(dbProperties);
 
         return res.render("favorites", { propertyList: dbProperties });
       });
