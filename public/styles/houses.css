@@ -1,3 +1,7 @@
+body {
+	overflow: hidden;
+}
+
 .save-home-button {
 	right: 0;
 	font-size: 24px;
@@ -9,7 +13,7 @@
 
 /* Google Maps Styling */
 #map {
-	height: 400px;
+	height: 75%;
 	width: 100%;
 }
 
@@ -40,6 +44,15 @@
 	letter-spacing: 0.8px;
 	line-height: 1.5;
 	margin-left: 10px;
+}
+
+#google-maps-container {
+	height: 100vh;
+}
+
+#houses-search-result {
+	height: 100vh;
+	overflow-y: scroll;
 }
 
 /* Medium devices (tablets, 768px and down) */

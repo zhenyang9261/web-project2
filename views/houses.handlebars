@@ -139,7 +139,7 @@
     <div class="container-fluid border-top">
         <div class="row">
             {{!-- Google Maps --}}
-            <div class="col-md-6 d-none d-lg-block" data-target="#nav-profile">
+            <div id="google-maps-container" class="col-md-6 d-none d-lg-block px-0 pt-2" data-target="#nav-profile">
                     <div id="map"></div>
             </div>
 
@@ -160,10 +160,10 @@
                     </div>
                 </div>
                 {{!-- List of Houses --}}
-                <div class="row row-cols-1 row-cols-md-2">
+                <div id="houses-search-result" class="row row-cols-1 row-cols-md-2">
                     {{#each housesList.housesData}}
                     <div class="col mb-4">
-                        <div class="card home-preview-card" 
+                        <div class="card home-preview-card shadow-sm h-100" 
                             data-lat="{{latLng.lat}}" 
                             data-lng="{{latLng.lng}}"
                             data-price="{{price}}"
