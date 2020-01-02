@@ -7,6 +7,41 @@
 	cursor: pointer;
 }
 
+/* Google Maps Styling */
+#map {
+	height: 400px;
+	width: 100%;
+}
+
+.house-mini-view {
+	width: 135px;
+	height: 60px;
+	display: flex;
+	font-size: 12px;
+	text-decoration: none;
+}
+
+.house-mini-view:hover {
+	text-decoration: none;
+}
+
+.mini-view-image {
+	width: 45%;
+}
+
+#map-mini-image {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+}
+
+.mini-view-details {
+	color: #000;
+	letter-spacing: 0.8px;
+	line-height: 1.5;
+	margin-left: 10px;
+}
+
 /* Medium devices (tablets, 768px and down) */
 @media (max-width: 768px) {
 	.houses-side-header .container {

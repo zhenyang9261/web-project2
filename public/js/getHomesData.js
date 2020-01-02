@@ -11,7 +11,7 @@ module.exports = function (zipcode, res) {
         "method": "GET",
         "hostname": "realtor.p.rapidapi.com",
         "port": null,
-        "path": "/properties/list-for-sale?offset=0&limit=10&postal_code=" + zipcode + "&prop_status=for_sale",
+        "path": "/properties/list-for-sale?postal_code=" + zipcode + "&prop_status=for_sale&price_min=1&beds_min=1&baths_min=1&sqft_min=1&sort=relevance&radius=15",
         "headers": {
             "x-rapidapi-host": "realtor.p.rapidapi.com",
             "x-rapidapi-key": "f9272201fdmshbde115583027395p1cc4d4jsn0cd13e343f9a"
@@ -44,8 +44,9 @@ module.exports = function (zipcode, res) {
                 homeForSale.price = home.price  || "" ;
                 homeForSale.bedrooms = home.beds  || "";
                 homeForSale.bathrooms = home.baths || "";
-                homeForSale.sqft = home.lot_size || "" ;
+                homeForSale.sqft = home.sqft || "" ;
                 homeForSale.imgUrl = home.photo || "https://picsum.photos/200";
+                homeForSale.latLng = {lat: home.lat, lng: home.lon};
                 data.housesData.push(homeForSale);
             }
             res.render("houses", { housesList: data });
