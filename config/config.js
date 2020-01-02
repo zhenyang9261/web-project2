@@ -18,5 +18,8 @@ module.exports = {
     use_env_variable: "JAWSDB_URL",
     use_redis_env_variable: "REDIS_URL",
     dialect: "mysql"
+  }, 
+  env: {
+    JWT_KEY: "GnrAlarRQ9Om0OtYYCRO"
   }
 };
