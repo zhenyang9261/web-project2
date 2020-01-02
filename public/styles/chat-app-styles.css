@@ -133,6 +133,33 @@ h5 {
     padding: 5px;
 }
 
+.create-new-chat-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    height: 10%;
+    padding: 10px;
+}
+
+.create-new-chat-prompt {
+    margin: 0px;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 5px 5px 0px 5px;
+}
+
+.create-new-chat-input {
+    text-decoration: none;
+    border: none;
+    font-size: 12px;
+    width: 50%;
+    padding: 5px 5px 0px 2.5px;
+}
+
+.off {
+    display: none;
+}
+
 #main-chat-initials-display {
     width: 40px;
     height: 40px;
