@@ -1,33 +1,47 @@
-<div id="home">
+<div class="container">
+  {{!-- Home Page navbar --}}
+  <header class="site-header">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-light" aria-label="Main navigation">
+        {{!-- Home Page Logo --}}
+        <a class="navbar-brand" href="/">
+          <img src="img/logo.png" width="180" alt="Pillow Logo">
+        </a>
+        <button class="navbar-toggler mb-2" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars fa-md"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto text-right auth-nav-container">
+              {{!-- Login button --}}
+              <li class="nav-item mr-3 login-button"><a class="nav-link text-dark font-weight-bolder" href="/login">Login</a></li>
+              {{!-- Sign Up button --}}
+              <li class="nav-item sign-up-button"><a class="btn btn-outline-primary" href="/signup">Sign up</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </header>
+  {{!-- Home page main content --}}
   <div class="container">
-    <div class="row">
-      <div class="col-8 offset-2">
-        <h1>{{msg}}</h1>
-        <h2>This is our Home Page!</h2>
-        <form class="clearfix mb-4" action="POST">
-          <div class="form-group">
-            <label for="example-text">Example Text</label>
-            <input type="text" id="example-text" class="form-control" aria-describedby="example-text" placeholder="Enter Example Text">
-          </div>
-          <div class="form-group">
-            <label for="example-description">Example Description</label>
-            <textarea class="form-control" id="example-description" aria-describedby="example-description" placeholder="Enter Example Description"></textarea>
-          </div>
-          <button id="submit" class="btn btn-primary float-right">Submit</button>
-        </form>
-        <h3>Examples:</h3>
-        <ul id="example-list" class="list-group">
-          {{#each examples}}
-          <li data-id="{{this.id}}" class="list-group-item">
-            <a href="example/{{this.id}}">{{this.text}}</a>
-            <button class="btn btn-danger float-right delete">ｘ</button>
-          </li>
-          {{/each}}
-        </ul>
+    <div class="row justify-content-center">
+      {{!-- Lead Statement --}}
+      <div class="col-12 text-center mb-5">
+        <h1 class="display-4 lead-statement">Let Us Help You Find</h1>
+        <h1 class="display-4 font-weight-bold lead-statement">Your Dream Home</span></h1>
       </div>
+      {{!-- Address Input form --}}
+      <form>
+        <div class="form-group shadow">
+          <input type="search" class="input-address form-control text-truncate pl-4" id="homePage-address-input"
+            placeholder="Enter address, city or ZIP code">
+        </div>
+      </form>
+    </div>
+    {{!-- Home Page illustration --}}
+    <div class="container illustration">
+      <img src="/img/home_page_illustration.svg" class="img-fluid" alt="Home Page buildings illustration">
     </div>
   </div>
-</div>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="/js/index.js"></script>
+  <script src="/js/index.js"></script>

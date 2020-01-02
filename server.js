@@ -4,6 +4,20 @@ var exphbs = require("express-handlebars");
 
 var db = require("./models");
 
+var env = process.env.NODE_ENV || "development";
+var config = require(__dirname + "/config/config.js")[env];
+
+var redis = require("redis");
+if (config.use_redis_env_variable) {
+  var client = redis.createClient(process.env[config.use_redis_env_variable]);
+} else {
+  var client = redis.createClient();
+}
+
+client.on("connect", () => {
+  app.set("client", client);
+});
+
 var app = express();
 var PORT = process.env.PORT || 3000;
 
@@ -25,8 +39,8 @@ app.set("view engine", "handlebars");
 require("./routes/apiRoutes")(app);
 require("./routes/htmlRoutes")(app);
 
-var users = require("./routes/users");
-app.use(users);
+var auth = require("./routes/auth");
+app.use("/", auth);
 
 var syncOptions = { force: false };
 
@@ -38,12 +52,20 @@ if (process.env.NODE_ENV === "test") {
 
 // Starting the server, syncing our models ------------------------------------/
 db.sequelize.sync(syncOptions).then(function() {
-  app.listen(PORT, function() {
+  var server = app.listen(PORT, function() {
     console.log(
       "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
       PORT,
       PORT
     );
+
+    var io = require("socket.io");
+    var socket = io(server);
+    app.set("socket", socket);
+
+    socket.on("connect", socket => {
+      socket.emit("id", socket.id);
+    });
   });
 });
 
