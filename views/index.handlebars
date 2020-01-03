@@ -14,9 +14,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto text-right auth-nav-container">
               {{!-- Login button --}}
-              <li class="nav-item mr-3 login-button"><a class="nav-link text-dark font-weight-bolder" href="/login">Login</a></li>
+              <li class="nav-item mr-3 chat-button logged-in"><a class="nav-link text-dark font-weight-bolder" href="/users/chat">Chats</a></li>
               {{!-- Sign Up button --}}
-              <li class="nav-item sign-up-button"><a class="btn btn-outline-primary" href="/signup">Sign up</a></li>
+              <li class="nav-item logout-button logged-in"><a class="btn btn-outline-primary" href="/">Logout</a></li>
+              {{!-- Login button --}}
+              <li class="nav-item mr-3 login-button logged-out"><a class="nav-link text-dark font-weight-bolder" href="/login">Login</a></li>
+              {{!-- Sign Up button --}}
+              <li class="nav-item sign-up-button logged-out"><a class="btn btn-outline-primary" href="/signup">Sign up</a></li>
           </ul>
         </div>
       </nav>
