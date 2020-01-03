@@ -164,14 +164,15 @@
                     {{#each housesList.housesData}}
                     <div class="col mb-4">
                         <div class="card home-preview-card shadow-sm h-100" 
+                            data-price="{{price}}"
+                            data-address="{{address}}"
                             data-lat="{{latLng.lat}}" 
                             data-lng="{{latLng.lng}}"
                             data-price="{{price}}"
                             data-bedrooms="{{bedrooms}}"
                             data-bathrooms="{{bathrooms}}"
                             data-sqft="{{sqft}}"
-                            data-imgUrl="{{imgUrl}}"
-                        >
+                            data-imgUrl="{{imgUrl}}">
                             {{!-- Save home to favorite list --}}
                             <button type="button" class="btn btn-link position-absolute save-home-button" data-toggle="button" aria-pressed="false">
                                 <i class="far fa-heart text-white"></i>
@@ -206,7 +207,6 @@
         </div>
     </div>
 </div>
-<<<<<<< HEAD
   
 <div class="modal-container off">
     <div class="property-images-container">
@@ -238,7 +238,7 @@
         <hr>
         <div class="property-stats-container">
             <div class="price-bed-bath-sqr-foot-container">
-                <h3 class="property-price-header">$<span class="property-price"></span></h3>
+                <h3 class="property-price-header"><span class="property-price"></span></h3>
                 <p class="num-bed-display"><span class="num-bed"></span> ba</p>
                 <p class="num-bath-display"><span class="num-bath"></span> bd</p>
                 <p class="sqr-foot-display" style="padding-left: 5px"><span class="sqrft"></span> sqft</p>
@@ -369,11 +369,5 @@
         </form>
     </div>
 </div>
-<script src="/js/index.js"></script>
-<script src="/js/houses.js"></script>
-=======
-
-<script src="/js/index.js"></script>
 <script src="/js/houses.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdpacUXCdfCmc4qgSzpk14NE3nHOcMsuY&callback=initMap" async defer></script>
->>>>>>> ba6cd647a76b6f2d4d6d6db6a42d6aecad4734a9
