@@ -4,7 +4,7 @@ module.exports = {
     password: process.env.PASSWORD_DB,
     database: "Pillow",
     host: "localhost",
-    dialect: "mysql", 
+    dialect: "mysql"
   },
   test: {
     username: "root",
