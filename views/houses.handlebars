@@ -141,9 +141,8 @@
     <div class="container-fluid border-top">
         <div class="row">
             {{!-- Google Maps --}}
-            <div class="col-md-6 d-none d-lg-block" data-target="#nav-profile">
-                <img alt="Bootstrap Image Preview" src="https://i.stack.imgur.com/8KmHl.png"
-                    class="img-fluid rounded" />
+            <div id="google-maps-container" class="col-md-6 d-none d-lg-block px-0 pt-2" data-target="#nav-profile">
+                <div id="map"></div>
             </div>
 
             <div class="col-md-12 col-lg-6">
@@ -163,10 +162,12 @@
                     </div>
                 </div>
                 {{!-- List of Houses --}}
-                <div class="row row-cols-1 row-cols-md-2">
+                <div id="houses-search-result" class="row row-cols-1 row-cols-md-2">
                     {{#each housesList.housesData}}
                     <div class="col mb-4">
-                        <div class="card home-preview-card">
+                        <div class="card home-preview-card shadow-sm h-100" data-lat="{{latLng.lat}}"
+                            data-lng="{{latLng.lng}}" data-price="{{price}}" data-bedrooms="{{bedrooms}}"
+                            data-bathrooms="{{bathrooms}}" data-sqft="{{sqft}}" data-imgUrl="{{imgUrl}}">
                             {{!-- Save home to favorite list --}}
                             <button type="button" class="btn btn-link position-absolute save-home-button" id={{id}}
                                 data-toggle="button" aria-pressed="false">
@@ -206,3 +207,5 @@
 
 <script src="/js/index.js"></script>
 <script src="/js/houses.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdpacUXCdfCmc4qgSzpk14NE3nHOcMsuY&callback=initMap" async
+    defer></script>

@@ -64,9 +64,23 @@ $(function() {
   });
 });
 
-/*=============================================
-=              Saved Favorites                =
-=============================================*/
+const Http = new XMLHttpRequest();
+const url =
+  "https://maps.googleapis.com/maps/api/geocode/json?address=GREENSBORO+NC&key=AIzaSyBdpacUXCdfCmc4qgSzpk14NE3nHOcMsuY";
+Http.open("GET", url);
+Http.send();
+
+Http.onreadystatechange = function() {
+  if (this.readyState === 4 && this.status === 200) {
+    let data = JSON.parse(Http.responseText).results[0].geometry.location;
+    console.log(data);
+  }
+};
+
+/* ================================
+ Saved Favorites
+ ================================== */
+
 // Get references to page elements
 var $getFavoritesBtn = $("#get-favorites");
 
@@ -98,16 +112,9 @@ var API = {
 
 // When Saved Favorites button is clicked
 var handleGetFavoritesBtn = function() {
-  // $.get("/api/favorites/1", function(data) {
-  //   favorites = data;
-  //   for (var i = 0; i < favorites.length; i++) {
-  //     console.log(
-  //       "\nfavorites " + i + "-------------- \n" + favorites[i].street
-  //     );
-  //   }
-  // });
   window.location.href = "/api/favorites/1";
 };
+
 // Add event listeners to the submit and delete buttons
 $getFavoritesBtn.on("click", handleGetFavoritesBtn);
 
