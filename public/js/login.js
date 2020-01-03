@@ -11,8 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .then(response => {
             if(response.message === "Auth successful") {
-                localStorage.setItem("jwt", JSON.stringify(response.token));
-                localStorage.setItem("name", response.name);
+                localStorage.setItem("jwt", response.token);
             }
 
             
