@@ -1,3 +1,7 @@
+body {
+	overflow: hidden;
+}
+
 .save-home-button {
 	right: 0;
 	font-size: 24px;
@@ -5,6 +9,50 @@
 
 .home-preview-card {
 	cursor: pointer;
+}
+
+/* Google Maps Styling */
+#map {
+	height: 75%;
+	width: 100%;
+}
+
+.house-mini-view {
+	width: 135px;
+	height: 60px;
+	display: flex;
+	font-size: 12px;
+	text-decoration: none;
+}
+
+.house-mini-view:hover {
+	text-decoration: none;
+}
+
+.mini-view-image {
+	width: 45%;
+}
+
+#map-mini-image {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+}
+
+.mini-view-details {
+	color: #000;
+	letter-spacing: 0.8px;
+	line-height: 1.5;
+	margin-left: 10px;
+}
+
+#google-maps-container {
+	height: 100vh;
+}
+
+#houses-search-result {
+	height: 100vh;
+	overflow-y: scroll;
 }
 
 /* Medium devices (tablets, 768px and down) */

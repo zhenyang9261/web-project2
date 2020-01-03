@@ -65,6 +65,21 @@ $(function(){
 });
 
 
+
+const Http = new XMLHttpRequest();
+const url = 'https://maps.googleapis.com/maps/api/geocode/json?address=GREENSBORO+NC&key=AIzaSyBdpacUXCdfCmc4qgSzpk14NE3nHOcMsuY';
+Http.open("GET", url);
+Http.send();
+
+Http.onreadystatechange = function() {
+  if (this.readyState === 4 && this.status === 200) {
+    let data = JSON.parse(Http.responseText).results[0].geometry.location;
+    console.log(data);
+  }
+}
+
+
+
 // Get references to page elements
 var $exampleText = $("#example-text");
 var $exampleDescription = $("#example-description");
