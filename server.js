@@ -30,7 +30,8 @@ app.use(express.static("public"));
 app.engine(
   "handlebars",
   exphbs({
-    defaultLayout: "main"
+    defaultLayout: "main", 
+    helpers: require("./public/js/handlebars-helpers")
   })
 );
 app.set("view engine", "handlebars");
@@ -41,6 +42,9 @@ require("./routes/htmlRoutes")(app);
 
 var auth = require("./routes/auth");
 app.use("/", auth);
+
+var chat = require("./routes/chat");
+app.use("/users", chat);
 
 var syncOptions = { force: false };
 

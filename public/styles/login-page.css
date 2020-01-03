@@ -37,7 +37,11 @@ h5 {
     font-weight: 500;
 }
 
+<<<<<<< HEAD
 img {
+=======
+.header-container img {
+>>>>>>> ba6cd647a76b6f2d4d6d6db6a42d6aecad4734a9
     margin: 0 0 0 10px;
 }
 
