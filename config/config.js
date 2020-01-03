@@ -2,9 +2,9 @@ module.exports = {
   development: {
     username: process.env.USER_DB,
     password: process.env.PASSWORD_DB,
-    database: "pillow2",
+    database: "Pillow",
     host: "localhost",
-    dialect: "mysql"
+    dialect: "mysql", 
   },
   test: {
     username: "root",
@@ -17,6 +17,6 @@ module.exports = {
   production: {
     use_env_variable: "JAWSDB_URL",
     use_redis_env_variable: "REDIS_URL",
-    dialect: "mysql"
+    dialect: "mysql", 
   }
 };
