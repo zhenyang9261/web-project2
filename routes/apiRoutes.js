@@ -2,6 +2,7 @@ var db = require("../models");
 var Sequelize = require("sequelize");
 
 const Op = Sequelize.Op;
+var checkAuth = require("./check-auth");
 
 module.exports = function(app) {
   // Get all properties
@@ -52,11 +53,13 @@ module.exports = function(app) {
   });
 
   // Create a new favorite
-  app.post("/api/favorites", function(req, res) {
+  app.post("/api/favorites", checkAuth, function(req, res) {
+    console.log("user id: " + req.token.id);
     // create takes an argument of an object describing the item we want to
     // insert into our table. In this case we just we pass in an object with a user id and a property id
     db.Users_Properties.create({
-      userId: req.body.userId,
+      //userId: req.body.userId,
+      userId: req.token.id,
       propertyId: req.body.propertyId
     }).then(function(dbFavorites) {
       // We have access to the new favorite as an argument inside of the callback function

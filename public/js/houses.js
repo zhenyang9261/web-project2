@@ -54,92 +54,101 @@ $(function() {
 
     $.post("/api/property", property, function(data) {
       var favorite = {
-        userId: 1,
+        //userId: 1,
         propertyId: data.id
       };
-      $.post("/api/favorites", favorite, function() {});
+      // $.post("/api/favorites", favorite, function() {});
+
+      $.ajax({
+        url: "/api/favorites",
+        method: "POST",
+        headers: {
+          token: localStorage.getItem("jwt")
+        },
+        data: favorite
+      });
     });
   });
+});
 
-  // Google Maps API
-  var infoObj = [];
+// Google Maps API
+var infoObj = [];
 
-  function initMap() {
-    // Map options
-    var options = {
-      zoom: 10,
-      center: $(".home-preview-card").data(),
-      fullscreenControl: false
-    };
-    // New map
-    var map = new google.maps.Map(document.getElementById("map"), options);
+function initMap() {
+  // Map options
+  var options = {
+    zoom: 10,
+    center: $(".home-preview-card").data(),
+    fullscreenControl: false
+  };
+  // New map
+  var map = new google.maps.Map(document.getElementById("map"), options);
 
-    // Array of markers
-    var markers = [];
-    // Loop through all properties elements and create marker info
-    $(".home-preview-card").each(function(house) {
-      let data = $(this).data();
-      // Create content for marker popup
-      let content =
-        "<a href='#' class='house-mini-view'><div class='mini-view-image'><img id='map-mini-image' src='" +
-        data.imgurl +
-        "'></div><div class='mini-view-details'><span class='font-weight-bold'>" +
-        data.price +
-        "</span><div>" +
-        data.bedrooms +
-        " bd, " +
-        data.bathrooms +
-        " ba</div><di>" +
-        data.sqft +
-        "</di></div></a>";
-      let coords = $(this).data();
-      markers.push({ coords: coords, content: content });
+  // Array of markers
+  var markers = [];
+  // Loop through all properties elements and create marker info
+  $(".home-preview-card").each(function(house) {
+    let data = $(this).data();
+    // Create content for marker popup
+    let content =
+      "<a href='#' class='house-mini-view'><div class='mini-view-image'><img id='map-mini-image' src='" +
+      data.imgurl +
+      "'></div><div class='mini-view-details'><span class='font-weight-bold'>" +
+      data.price +
+      "</span><div>" +
+      data.bedrooms +
+      " bd, " +
+      data.bathrooms +
+      " ba</div><di>" +
+      data.sqft +
+      "</di></div></a>";
+    let coords = $(this).data();
+    markers.push({ coords: coords, content: content });
+  });
+
+  // Loop through markers
+  for (var i = 0; i < markers.length; i++) {
+    // Add marker
+    addMarker(markers[i]);
+  }
+
+  // Add Marker Function
+  function addMarker(props) {
+    // Marker Custom icon
+    var iconImage = "/img/map-marker-icon.png";
+    var marker = new google.maps.Marker({
+      position: props.coords,
+      map: map
     });
 
-    // Loop through markers
-    for (var i = 0; i < markers.length; i++) {
-      // Add marker
-      addMarker(markers[i]);
+    if (iconImage) {
+      // Set icon image
+      marker.setIcon(iconImage);
     }
 
-    // Add Marker Function
-    function addMarker(props) {
-      // Marker Custom icon
-      var iconImage = "/img/map-marker-icon.png";
-      var marker = new google.maps.Marker({
-        position: props.coords,
-        map: map
+    // Check content
+    if (props.content) {
+      var infoWindow = new google.maps.InfoWindow({
+        content: props.content
       });
 
-      if (iconImage) {
-        // Set icon image
-        marker.setIcon(iconImage);
-      }
+      // Display popup on marker hover
+      marker.addListener("mouseover", function() {
+        closeOtherInfo();
+        infoWindow.open(map, marker);
+        infoObj[0] = infoWindow;
+      });
 
-      // Check content
-      if (props.content) {
-        var infoWindow = new google.maps.InfoWindow({
-          content: props.content
-        });
-
-        // Display popup on marker hover
-        marker.addListener("mouseover", function() {
-          closeOtherInfo();
-          infoWindow.open(map, marker);
-          infoObj[0] = infoWindow;
-        });
-
-        function closeOtherInfo() {
-          if (infoObj.length > 0) {
-            // detach the info-window from the marker
-            infoObj[0].set("marker", null);
-            // and close it
-            infoObj[0].close();
-            // blank the array
-            infoObj.length = 0;
-          }
+      function closeOtherInfo() {
+        if (infoObj.length > 0) {
+          // detach the info-window from the marker
+          infoObj[0].set("marker", null);
+          // and close it
+          infoObj[0].close();
+          // blank the array
+          infoObj.length = 0;
         }
       }
     }
   }
-});
+}
