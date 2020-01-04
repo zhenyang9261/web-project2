@@ -54,7 +54,7 @@ module.exports = function(app) {
 
   // Create a new favorite
   app.post("/api/favorites", checkAuth, function(req, res) {
-    console.log("user id: " + req.token.id);
+    console.log("user id in post favorites: " + req.token.id);
     // create takes an argument of an object describing the item we want to
     // insert into our table. In this case we just we pass in an object with a user id and a property id
     db.Users_Properties.create({
@@ -77,7 +77,9 @@ module.exports = function(app) {
     });
   });
 
+  // Get all favorites of a user identified by the user id in header
   app.get("/api/favorites/", checkAuth, function(req, res) {
+    console.log("user id in get favorites: " + req.token.id);
     db.Users_Properties.findAll({
       where: {
         userId: req.token.id

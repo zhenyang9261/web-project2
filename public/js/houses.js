@@ -6,7 +6,7 @@ $(function() {
     button.toggleClass("font-weight-bold");
 
     var id = $(this).attr("id");
-    console.log("id: " + id);
+
     // Get values from the elements
     var picURL = $("#pic-url-" + id).attr("src");
     var address = $("#house-address-" + id).text();
@@ -14,7 +14,6 @@ $(function() {
     var numBathrooms = $("#bathrooms-" + id).text();
     var sqf = $("#sqft-" + id).text();
     var price = $("#price-" + id).text();
-    console.log(numBeds + " " + address);
 
     // Conversions to match database table constraints
     // Get street, city, zip from address;

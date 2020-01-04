@@ -53,6 +53,7 @@ module.exports = function(zipcode, res) {
         homeForSale.bathrooms = home.baths || "";
         homeForSale.sqft = home.lot_size || "";
         homeForSale.imgUrl = home.photo || "https://picsum.photos/200";
+        homeForSale.latLng = { lat: home.lat, lng: home.lon };
         data.housesData.push(homeForSale);
         i++;
       }
