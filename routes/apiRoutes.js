@@ -98,8 +98,8 @@ module.exports = function (app) {
           [Op.or]: conditions
         }
       }).then(function (dbProperties) {
-        for (var i = 0; i < dbProperties.length; i++)
-          console.log(dbProperties[i].street);
+        // for (var i = 0; i < dbProperties.length; i++)
+        //   console.log(dbProperties[i].street);
         res.render("favorites", { propertyList: dbProperties });
       });
     });

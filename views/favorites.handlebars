@@ -39,9 +39,9 @@
                 <div class="row row-cols-1 row-cols-md-3">
                     {{#each propertyList}}
                     <div class="col mb-4">
-                        <div class="card home-preview-card">
+                        <div class="card home-preview-card shadow-sm h-100">
 
-                            <img src={{picURL}} width="100%" height="auto" class="card-img-top" alt="...">
+                            <img src={{picURL}} class="card-img-top img-fluid favorites-img" alt="...">
                             {{!-- Property preview details card --}}
                             <div class="card-body">
                                 <ul class="list-unstyled list-inline">
@@ -56,8 +56,8 @@
                                     <li class="list-inline-item border-right border-left pr-2 pl-2"><small
                                             class="text-muted"><span>{{numBathrooms}}</span>bds</small></li>
                                     {{!-- House square footage --}}
-                                    <li class="list-inline-item"><small
-                                            class="text-muted"><span>{{sqf}}</span>sqft</small></li>
+                                    {{!-- <li class="list-inline-item"><small
+                                            class="text-muted"><span>{{sqf}}</span>sqft</small></li> --}}
                                 </ul>
                                 {{!-- House Address --}}
                                 <p class="card-text" id="house-address">{{street}}, {{city}}, {{zipCode}}

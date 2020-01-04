@@ -31,12 +31,11 @@ $(function () {
     numBathrooms = parseInt(numBathrooms);
 
     // Remove text part of the sqf and comma, then convert to integer
+    sqf = 0;
     if (sqf) {
       var index = sqf.indexOf("sq");
       sqf = sqf.substring(0, index).trim();
       sqf = parseInt(sqf.replace(/,/g, ""));
-    } else {
-      sqf = 0;
     }
 
     var property = {};
@@ -56,7 +55,6 @@ $(function () {
         //userId: 1,
         propertyId: data.id
       };
-      // $.post("/api/favorites", favorite, function() {});
 
       $.ajax({
         url: "/api/favorites",
@@ -77,8 +75,15 @@ $(function () {
       method: "GET",
       headers: {
         token: localStorage.getItem("jwt")
-      }
+      },
+      dataType: 'html'
+    }).done(function (data) {
+
+      document.open();
+      document.write(data);
+      document.close();
     });
+
   };
 
   // Add button listeners 
