@@ -6,7 +6,7 @@ var config = require(__dirname + "/../../config/config.js")[env];
 module.exports = function (zipcode, res) {
 
   if (config.use_rapidapi_env_variable) {
-    var rapidapi_key = process.env[config.use_rapid_env_variable];
+    var rapidapi_key = process.env[config.use_rapidapi_env_variable];
   } else {
     var rapidapi_key = process.env.RAPIDAPI_KEY;
   }
