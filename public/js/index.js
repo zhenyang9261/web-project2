@@ -112,7 +112,7 @@ var API = {
 
 // When Saved Favorites button is clicked
 var handleGetFavoritesBtn = function() {
-  window.location.href = "/api/favorites/1";
+  window.location.href = "/api/favorites/" + localStorage.getItem("jwt");
 };
 
 // Add event listeners to the submit and delete buttons

@@ -77,6 +77,32 @@ module.exports = function(app) {
     });
   });
 
+  app.get("/api/favorites/", checkAuth, function(req, res) {
+    db.Users_Properties.findAll({
+      where: {
+        userId: req.token.id
+      }
+    }).then(function(dbFavorites) {
+      var conditions = [];
+      for (var i = 0; i < dbFavorites.length; i++) {
+        // Compose the where clause conditions
+        var condition = { id: dbFavorites[i].propertyId };
+        conditions.push(condition);
+      }
+
+      // Find properties and pass to favorites handlebar
+      db.Properties.findAll({
+        where: {
+          [Op.or]: conditions
+        }
+      }).then(function(dbProperties) {
+        console.log(dbProperties);
+
+        return res.render("favorites", { propertyList: dbProperties });
+      });
+    });
+  });
+
   /*
    * Function to compose a JSON object for sequelize where query
    *
