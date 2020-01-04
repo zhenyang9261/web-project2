@@ -30,7 +30,8 @@
                     {{!-- Search address input --}}
                     <form class="small-search-input w-100">
                         <div class="form-group">
-                            <input type="search" value="{{housesList.cityState}}" class="input-address form-control text-truncate pl-2"
+                            <input type="search" value="{{housesList.cityState}}"
+                                class="input-address form-control text-truncate pl-2"
                                 placeholder="Address, city or ZIP">
                         </div>
                     </form>
@@ -130,7 +131,8 @@
                 </li>
                 {{!-- Save home to favorites --}}
                 <li class="ml-auto">
-                    <a class="nav-link" href="#">Save Search</a>
+                    <button class="btn btn-primary btn-sm ml-auto d-block" id="get-favorites">Saved Favorite
+                        Properties</button>
                 </li>
             </ul>
         </div>
@@ -140,7 +142,7 @@
         <div class="row">
             {{!-- Google Maps --}}
             <div id="google-maps-container" class="col-md-6 d-none d-lg-block px-0 pt-2" data-target="#nav-profile">
-                    <div id="map"></div>
+                <div id="map"></div>
             </div>
 
             <div class="col-md-12 col-lg-6">
@@ -162,40 +164,36 @@
                 {{!-- List of Houses --}}
                 <div id="houses-search-result" class="row row-cols-1 row-cols-md-2">
                     {{#each housesList.housesData}}
-                    <div class="col mb-4 card-container">
-                        <div class="card home-preview-card shadow-sm" 
-                            data-lat="{{latLng.lat}}" 
-                            data-lng="{{latLng.lng}}"
-                            data-price="{{price}}"
-                            data-bedrooms="{{bedrooms}}"
-                            data-bathrooms="{{bathrooms}}"
-                            data-sqft="{{sqft}}"
-                            data-imgUrl="{{imgUrl}}"
-                        >
+                    <div class="col mb-4">
+                        <div class="card home-preview-card shadow-sm h-100" data-lat="{{latLng.lat}}"
+                            data-lng="{{latLng.lng}}" data-price="{{price}}" data-bedrooms="{{bedrooms}}"
+                            data-bathrooms="{{bathrooms}}" data-sqft="{{sqft}}" data-imgUrl="{{imgUrl}}">
                             {{!-- Save home to favorite list --}}
-                            <button type="button" class="btn btn-link position-absolute save-home-button" data-toggle="button" aria-pressed="false">
+                            <button type="button" class="btn btn-link position-absolute save-home-button" id={{id}}
+                                data-toggle="button" aria-pressed="false">
                                 <i class="far fa-heart text-white"></i>
                             </button>
-                            <img src={{imgUrl}} class="card-img-top" alt="...">
+                            <img id="pic-url-{{id}}" src={{imgUrl}} class="card-img-top" alt="...">
                             {{!-- Property preview details card --}}
                             <div class="card-body">
                                 <ul class="list-unstyled list-inline">
                                     {{!-- House Price --}}
                                     <li class="list-inline-item">
-                                        <h5 class="card-title"><span>{{price}}</span></h5>
+                                        <h5 class="card-title"><span id="price-{{id}}">{{price}}</span></h5>
                                     </li>
                                     {{!-- Number of Bedrooms --}}
-                                    <li class="list-inline-item"><small
-                                            class="text-muted"><span>{{bedrooms}}</span>ba</small></li>
+                                    <li class="list-inline-item"><small class="text-muted"><span
+                                                id="bedrooms-{{id}}">{{bedrooms}}</span> ba</small></li>
                                     {{!-- Numbers of Bathrooms --}}
                                     <li class="list-inline-item border-right border-left pr-2 pl-2"><small
-                                            class="text-muted"><span>{{bathrooms}}</span>bds</small></li>
+                                            class="text-muted"><span id="bathrooms-{{id}}">{{bathrooms}}</span>
+                                            bds</small></li>
                                     {{!-- House square footage --}}
-                                    <li class="list-inline-item"><small
-                                            class="text-muted"><span>{{sqft}}</span>sqft</small></li>
+                                    <li class="list-inline-item"><small class="text-muted"><span
+                                                id="sqft-{{id}}">{{sqft}}</span></small></li>
                                 </ul>
                                 {{!-- House Address --}}
-                                <p class="card-text" id="house-address">{{address}}
+                                <p class="card-text" id="house-address-{{id}}">{{address}}
                                 </p>
                             </div>
                         </div>
@@ -209,4 +207,4 @@
 
 <script src="/js/index.js"></script>
 <script src="/js/houses.js"></script>
-{{!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdpacUXCdfCmc4qgSzpk14NE3nHOcMsuY&callback=initMap" async defer></script> --}}
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdpacUXCdfCmc4qgSzpk14NE3nHOcMsuY&callback=initMap" async defer></script>

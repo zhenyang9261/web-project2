@@ -38,15 +38,17 @@ CREATE TABLE Properties(
     -- adding date the property was last sold and the price it was last sold for
     lastSoldPrice FLOAT,
     lastSoldDate DATE,
+    picURL VARCHAR(255),
     PRIMARY KEY(Id)
 );
 
 CREATE TABLE Users_Properties(
+    Id INT NOT NULL AUTO_INCREMENT,
 	userId INT NOT NULL, 
     propertyId INT NOT NULL, 
     FOREIGN KEY(userId) REFERENCES Users(Id) ON DELETE CASCADE, 
     FOREIGN KEY(propertyId) REFERENCES Properties(Id) ON DELETE CASCADE, 
-    PRIMARY KEY(userId, propertyId)
+    PRIMARY KEY(Id)
 );
 
 CREATE TABLE Messages(
