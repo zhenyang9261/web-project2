@@ -1,21 +1,25 @@
 module.exports = function(sequelize, DataTypes) {
-    var UsersProperties = sequelize.define('UsersProperties', {
+  var Users_Properties = sequelize.define(
+    "Users_Properties",
+    {
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'Users',
-          key: 'id'
+          model: "Users",
+          key: "id"
         }
       },
       propertyId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'Properties',
-          key: 'id'
+          model: "Properties",
+          key: "id"
         }
       }
-    });
-    return UsersProperties;
-  };
+    },
+    { timestamps: false }
+  );
+  return Users_Properties;
+};
