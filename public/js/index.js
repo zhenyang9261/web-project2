@@ -1,11 +1,11 @@
-$(function(){
+$(function () {
   // Variable will be use to store details of input address: City's name, State, postal code, latitude and longitude.
   var addressData = {};
 
   //Loads route => /houses/:zipcode
   let getHomesForSaleData = function (zipcode) {
     window.location.href = "/houses/" + zipcode;
-  }
+  };
 
   /*=============================================
   =        Autocomplete Places Search           =
@@ -26,7 +26,7 @@ $(function(){
     getHomesForSaleData(addressData.zip);
   });
 
-/*=============================================
+  /*=============================================
 =              Geolocation API            =
 =============================================*/
   var locations = algoliasearch.initPlaces(
@@ -42,8 +42,8 @@ $(function(){
       addressData.city = suggestion.city.default[0] || "";
       addressData.state = suggestion.administrative[0] || "";
       addressData.zip = (suggestion.postcode || [])[0] || "";
-      addressData.lat = (suggestion._geoloc.lat || "");
-      addressData.lng = (suggestion._geoloc.lng || "");
+      addressData.lat = suggestion._geoloc.lat || "";
+      addressData.lng = suggestion._geoloc.lng || "";
       getHomesForSaleData(addressData.zip);
     }
   }
@@ -78,13 +78,24 @@ $(function(){
 //   }
 // }
 
-// Get references to page elements
-var $exampleText = $("#example-text");
-var $exampleDescription = $("#example-description");
-var $submitBtn = $("#submit");
-var $exampleList = $("#example-list");
+// // Add event listeners to the submit and delete buttons
+// $getFavoritesBtn.on("click", handleGetFavoritesBtn);
 
 /*=============================================
+if (localStorage.getItem("name")) {
+  console.log("we got in here");
+  var loginButton = document.querySelector(".login-button");
+  var signUpButton = document.querySelector(".sign-up-button");
+
+  loginButton.style.display = "none";
+  signUpButton.style.display = "none";
+
+  var welcomeMessage = document.createElement("li");
+  welcomeMessage.textContent = "Welcome, " + localStorage.getItem("name") + "!";
+
+  var authNavContainer = document.querySelector(".auth-nav-container");
+  authNavContainer.appendChild(welcomeMessage);
+=======
 =  Working with login and logout functionality  =
   =============================================*/
 var chatButton = document.querySelector(".chat-button");
@@ -94,11 +105,11 @@ function getLoggedInElements() {
   const loggedInElems = document.getElementsByClassName("logged-in");
   const loggedOutElems = document.getElementsByClassName("logged-out");
 
-  for(const loggedInElem of loggedInElems) {
+  for (const loggedInElem of loggedInElems) {
     loggedInElem.getElementsByClassName.display = "inline-block";
   }
 
-  for(const loggedOut of loggedOutElems) {
+  for (const loggedOut of loggedOutElems) {
     loggedOut.style.display = "none";
   }
 }
@@ -107,21 +118,20 @@ function getLoggedOutElems() {
   const loggedInElems = document.getElementsByClassName("logged-in");
   const loggedOutElems = document.getElementsByClassName("logged-out");
 
-  for(const loggedInElem of loggedInElems) {
+  for (const loggedInElem of loggedInElems) {
     loggedInElem.style.display = "none";
   }
 
-  for(const loggedOut of loggedOutElems) {
+  for (const loggedOut of loggedOutElems) {
     loggedOut.style.display = "inline-block";
   }
 }
 
-if(localStorage.getItem("jwt")) {
+if (localStorage.getItem("jwt")) {
   getLoggedInElements();
 } else {
   getLoggedOutElems();
 }
-
 
 logoutButton.addEventListener("click", event => {
   localStorage.removeItem("jwt");
@@ -129,10 +139,10 @@ logoutButton.addEventListener("click", event => {
 });
 
 chatButton.addEventListener("click", event => {
-    event.preventDefault();
+  event.preventDefault();
 
-    location.href = "/users/chat?token=" + localStorage.getItem("jwt");
-})
+  location.href = "/users/chat?token=" + localStorage.getItem("jwt");
+});
 
 // // The API object contains methods for each kind of request we'll make
 // var API = {
