@@ -25,31 +25,31 @@ module.exports = function(app) {
   });
 
   // Get all favorites of the user
-  app.get("/api/favorites/:userId", function(req, res) {
-    db.Users_Properties.findAll({
-      where: {
-        userId: req.params.userId
-      }
-    }).then(function(dbFavorites) {
-      var conditions = [];
-      for (var i = 0; i < dbFavorites.length; i++) {
-        // Compose the where clause conditions
-        var condition = { id: dbFavorites[i].propertyId };
-        conditions.push(condition);
-      }
+  // app.get("/api/favorites/:userId", function(req, res) {
+  //   db.Users_Properties.findAll({
+  //     where: {
+  //       userId: req.params.userId
+  //     }
+  //   }).then(function(dbFavorites) {
+  //     var conditions = [];
+  //     for (var i = 0; i < dbFavorites.length; i++) {
+  //       // Compose the where clause conditions
+  //       var condition = { id: dbFavorites[i].propertyId };
+  //       conditions.push(condition);
+  //     }
 
-      // Find properties and pass to favorites handlebar
-      db.Properties.findAll({
-        where: {
-          [Op.or]: conditions
-        }
-      }).then(function(dbProperties) {
-        console.log(dbProperties);
+  //     // Find properties and pass to favorites handlebar
+  //     db.Properties.findAll({
+  //       where: {
+  //         [Op.or]: conditions
+  //       }
+  //     }).then(function(dbProperties) {
+  //       console.log(dbProperties);
 
-        return res.render("favorites", { propertyList: dbProperties });
-      });
-    });
-  });
+  //       return res.render("favorites", { propertyList: dbProperties });
+  //     });
+  //   });
+  // });
 
   // Render 404 page for any unmatched routes
   app.get("*", function(req, res) {

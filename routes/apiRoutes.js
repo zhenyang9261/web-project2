@@ -98,9 +98,8 @@ module.exports = function(app) {
           [Op.or]: conditions
         }
       }).then(function(dbProperties) {
-        console.log(dbProperties);
-
-        return res.render("favorites", { propertyList: dbProperties });
+        console.log(dbProperties[0].street);
+        res.render("favorites", { propertyList: dbProperties });
       });
     });
   });
