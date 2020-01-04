@@ -1,6 +1,6 @@
-$(function() {
-  // Save home to favorites
-  $(".save-home-button").on("click", function(e) {
+$(function () {
+  // Save home to favorites button action
+  $(".save-home-button").on("click", function (e) {
     e.stopPropagation();
     let button = $(this).children();
     button.toggleClass("font-weight-bold");
@@ -51,7 +51,7 @@ $(function() {
 
     console.log(property);
 
-    $.post("/api/property", property, function(data) {
+    $.post("/api/property", property, function (data) {
       var favorite = {
         //userId: 1,
         propertyId: data.id
@@ -68,6 +68,21 @@ $(function() {
       });
     });
   });
+
+  // When Saved Favorites button is clicked
+  var handleGetFavoritesBtn = function () {
+    //window.location.href = "/api/favorites/" + localStorage.getItem("jwt");
+    $.ajax({
+      url: "/api/favorites",
+      method: "GET",
+      headers: {
+        token: localStorage.getItem("jwt")
+      }
+    });
+  };
+
+  // Add button listeners 
+  $("#get-favorites").on("click", handleGetFavoritesBtn);
 });
 
 // Google Maps API
@@ -86,7 +101,7 @@ function initMap() {
   // Array of markers
   var markers = [];
   // Loop through all properties elements and create marker info
-  $(".home-preview-card").each(function(house) {
+  $(".home-preview-card").each(function (house) {
     let data = $(this).data();
     // Create content for marker popup
     let content =
@@ -132,7 +147,7 @@ function initMap() {
       });
 
       // Display popup on marker hover
-      marker.addListener("mouseover", function() {
+      marker.addListener("mouseover", function () {
         closeOtherInfo();
         infoWindow.open(map, marker);
         infoObj[0] = infoWindow;

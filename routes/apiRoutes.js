@@ -4,36 +4,36 @@ var Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 var checkAuth = require("./check-auth");
 
-module.exports = function(app) {
+module.exports = function (app) {
   // Get all properties
-  app.get("/api/properties", function(req, res) {
-    db.Properties.findAll({}).then(function(dbProperties) {
+  app.get("/api/properties", function (req, res) {
+    db.Properties.findAll({}).then(function (dbProperties) {
       res.json(dbProperties);
     });
   });
 
   // Get one property based on id
-  app.get("/api/properties/:id", function(req, res) {
+  app.get("/api/properties/:id", function (req, res) {
     db.Properties.findOne({
       where: {
         Id: req.params.id
       }
-    }).then(function(dbProperties) {
+    }).then(function (dbProperties) {
       res.json(dbProperties);
     });
   });
 
   // Get all properties based on search criteria
-  app.get("/api/properties/:params", function(req, res) {
+  app.get("/api/properties/:params", function (req, res) {
     var where = queryToJson(req.params.params);
 
-    db.Properties.findAll({ where: where }).then(function(dbProperties) {
+    db.Properties.findAll({ where: where }).then(function (dbProperties) {
       res.json(dbProperties);
     });
   });
 
   // Create a new property
-  app.post("/api/property", function(req, res) {
+  app.post("/api/property", function (req, res) {
     // create takes an argument of an object describing the item we want to
     // insert into our table. In this case we just we pass in an object with a user id and a property id
     db.Properties.create({
@@ -47,13 +47,13 @@ module.exports = function(app) {
       picURL: req.body.picURL,
       latitude: 35, // required field, dummy value
       longitude: -75 // required field, dummy value
-    }).then(function(dbProperty) {
+    }).then(function (dbProperty) {
       res.json(dbProperty);
     });
   });
 
   // Create a new favorite
-  app.post("/api/favorites", checkAuth, function(req, res) {
+  app.post("/api/favorites", checkAuth, function (req, res) {
     console.log("user id in post favorites: " + req.token.id);
     // create takes an argument of an object describing the item we want to
     // insert into our table. In this case we just we pass in an object with a user id and a property id
@@ -61,7 +61,7 @@ module.exports = function(app) {
       //userId: req.body.userId,
       userId: req.token.id,
       propertyId: req.body.propertyId
-    }).then(function(dbFavorites) {
+    }).then(function (dbFavorites) {
       // We have access to the new favorite as an argument inside of the callback function
 
       res.json(dbFavorites);
@@ -69,22 +69,22 @@ module.exports = function(app) {
   });
 
   // Delete a favorite property by property id
-  app.delete("/api/favorites/:propertyId", function(req, res) {
+  app.delete("/api/favorites/:propertyId", function (req, res) {
     db.Users_Properties.destroy({
       where: { propertyId: req.params.propertyId }
-    }).then(function(dbFavorite) {
+    }).then(function (dbFavorite) {
       res.json(dbFavorite);
     });
   });
 
   // Get all favorites of a user identified by the user id in header
-  app.get("/api/favorites/", checkAuth, function(req, res) {
+  app.get("/api/favorites/", checkAuth, function (req, res) {
     console.log("user id in get favorites: " + req.token.id);
     db.Users_Properties.findAll({
       where: {
         userId: req.token.id
       }
-    }).then(function(dbFavorites) {
+    }).then(function (dbFavorites) {
       var conditions = [];
       for (var i = 0; i < dbFavorites.length; i++) {
         // Compose the where clause conditions
@@ -97,8 +97,9 @@ module.exports = function(app) {
         where: {
           [Op.or]: conditions
         }
-      }).then(function(dbProperties) {
-        console.log(dbProperties[0].street);
+      }).then(function (dbProperties) {
+        for (var i = 0; i < dbProperties.length; i++)
+          console.log(dbProperties[i].street);
         res.render("favorites", { propertyList: dbProperties });
       });
     });
@@ -118,7 +119,7 @@ module.exports = function(app) {
     var keyValues = query.split("&");
 
     var result = {};
-    keyValues.forEach(function(keyValue) {
+    keyValues.forEach(function (keyValue) {
       keyValue = keyValue.split("=");
       if (
         keyValue[0] == "numBeds" ||

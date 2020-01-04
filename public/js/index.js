@@ -1,9 +1,9 @@
-$(function() {
+$(function () {
   // Variable will be use to store details of input address: City's name, State, postal code, latitude and longitude.
   var addressData = {};
 
   //Loads route => /houses/:zipcode
-  let getHomesForSaleData = function(zipcode) {
+  let getHomesForSaleData = function (zipcode) {
     window.location.href = "/houses/" + zipcode;
   };
 
@@ -16,7 +16,7 @@ $(function() {
     container: document.getElementsByClassName("input-address")[0]
   });
 
-  placesAutocomplete.on("change", function(e) {
+  placesAutocomplete.on("change", function (e) {
     // Create object with location data
     addressData.city = e.suggestion.name || "";
     addressData.state = e.suggestion.administrative || "";
@@ -49,8 +49,8 @@ $(function() {
   }
 
   var $button = document.getElementsByClassName("ap-icon-pin")[0];
-  $button.addEventListener("click", function() {
-    navigator.geolocation.getCurrentPosition(function(response) {
+  $button.addEventListener("click", function () {
+    navigator.geolocation.getCurrentPosition(function (response) {
       var coords = response.coords;
       lat = coords.latitude.toFixed(6);
       lng = coords.longitude.toFixed(6);
@@ -70,60 +70,60 @@ const url =
 Http.open("GET", url);
 Http.send();
 
-Http.onreadystatechange = function() {
+Http.onreadystatechange = function () {
   if (this.readyState === 4 && this.status === 200) {
     let data = JSON.parse(Http.responseText).results[0].geometry.location;
     console.log(data);
   }
 };
 
-/* ================================
- Saved Favorites
- ================================== */
+// /* ================================
+//  Saved Favorites
+//  ================================== */
 
-// Get references to page elements
-var $getFavoritesBtn = $("#get-favorites");
+// // Get references to page elements
+// var $getFavoritesBtn = $("#get-favorites");
 
-// The API object contains methods for each kind of request we'll make
-var API = {
-  saveFavorites: function(favorite) {
-    return $.ajax({
-      headers: {
-        "Content-Type": "application/json"
-      },
-      type: "POST",
-      url: "api/favorites",
-      data: JSON.stringify(favorite)
-    });
-  },
-  getFavorites: function() {
-    return $.ajax({
-      url: "api/favorites",
-      type: "GET"
-    });
-  },
-  deleteFavorite: function(id) {
-    return $.ajax({
-      url: "api/favorites/" + id,
-      type: "DELETE"
-    });
-  }
-};
+// // The API object contains methods for each kind of request we'll make
+// var API = {
+//   saveFavorites: function(favorite) {
+//     return $.ajax({
+//       headers: {
+//         "Content-Type": "application/json"
+//       },
+//       type: "POST",
+//       url: "api/favorites",
+//       data: JSON.stringify(favorite)
+//     });
+//   },
+//   getFavorites: function() {
+//     return $.ajax({
+//       url: "api/favorites",
+//       type: "GET"
+//     });
+//   },
+//   deleteFavorite: function(id) {
+//     return $.ajax({
+//       url: "api/favorites/" + id,
+//       type: "DELETE"
+//     });
+//   }
+// };
 
-// When Saved Favorites button is clicked
-var handleGetFavoritesBtn = function() {
-  //window.location.href = "/api/favorites/" + localStorage.getItem("jwt");
-  $.ajax({
-    url: "/api/favorites",
-    method: "GET",
-    headers: {
-      token: localStorage.getItem("jwt")
-    }
-  });
-};
+// // When Saved Favorites button is clicked
+// var handleGetFavoritesBtn = function() {
+//   //window.location.href = "/api/favorites/" + localStorage.getItem("jwt");
+//   $.ajax({
+//     url: "/api/favorites",
+//     method: "GET",
+//     headers: {
+//       token: localStorage.getItem("jwt")
+//     }
+//   });
+// };
 
-// Add event listeners to the submit and delete buttons
-$getFavoritesBtn.on("click", handleGetFavoritesBtn);
+// // Add event listeners to the submit and delete buttons
+// $getFavoritesBtn.on("click", handleGetFavoritesBtn);
 
 /*=============================================
 if (localStorage.getItem("name")) {
