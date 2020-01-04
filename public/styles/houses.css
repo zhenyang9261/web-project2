@@ -55,6 +55,18 @@ body {
 	overflow-y: scroll;
 }
 
+.home-preview-card img {
+	max-height: 220px;
+}
+
+.card-container:last-child {
+	margin-bottom: 200px !important;
+}
+
+.app-icon-clear {
+	diplay: none;
+}
+
 /* Medium devices (tablets, 768px and down) */
 @media (max-width: 768px) {
 	.houses-side-header .container {

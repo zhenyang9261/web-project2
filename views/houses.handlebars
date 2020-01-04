@@ -2,7 +2,7 @@
     {{!-- Houses Page navbar --}}
     <header class="houses-site-header">
         <div class="container-fluid p-0">
-            <nav class="navbar navbar-expand-lg navbar-light p-0 mb-1 flex-nowrap" aria-label="Main navigation">
+            <nav class="navbar navbar-expand-lg navbar-light p-0 mb-1" aria-label="Main navigation">
                 {{!-- Logo --}}
                 <a class="navbar-brand ml-2" href="/">
                     <img id="logo" src="../img/logo.png" width="180" alt="Pillow Logo">
@@ -13,13 +13,13 @@
                     aria-label="Toggle navigation">
                     <i class="fas fa-bars fa-md"></i>
                 </button>
-                <div class="collapse navbar-collapse mt-5 mt-lg-2 mr-lg-5 p-3" id="navbarNav">
-                    <ul class="navbar-nav ml-auto text-left">
+                <div class="collapse navbar-collapse mt-lg-2 mr-lg-5 mt-n3 p-3" id="navbarNav">
+                    <ul class="navbar-nav ml-auto text-right">
                         {{!-- Login button --}}
                         <li class="nav-item mr-3"><a class="nav-link text-dark font-weight-bolder" href="#">Login</a>
                         </li>
                         {{!-- Sign Up button --}}
-                        <li class="nav-item"><a class="btn btn-primary pl-0 pl-lg-3" href="#">Sign up</a></li>
+                        <li class="nav-item"><a class="btn btn-primary pl-lg-3" href="#">Sign up</a></li>
                     </ul>
                 </div>
             </nav>
@@ -162,8 +162,8 @@
                 {{!-- List of Houses --}}
                 <div id="houses-search-result" class="row row-cols-1 row-cols-md-2">
                     {{#each housesList.housesData}}
-                    <div class="col mb-4">
-                        <div class="card home-preview-card shadow-sm h-100" 
+                    <div class="col mb-4 card-container">
+                        <div class="card home-preview-card shadow-sm" 
                             data-lat="{{latLng.lat}}" 
                             data-lng="{{latLng.lng}}"
                             data-price="{{price}}"
@@ -209,4 +209,4 @@
 
 <script src="/js/index.js"></script>
 <script src="/js/houses.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdpacUXCdfCmc4qgSzpk14NE3nHOcMsuY&callback=initMap" async defer></script>
+{{!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdpacUXCdfCmc4qgSzpk14NE3nHOcMsuY&callback=initMap" async defer></script> --}}
