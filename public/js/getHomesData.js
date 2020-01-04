@@ -14,7 +14,7 @@ module.exports = function (zipcode, res) {
         "path": "/properties/list-for-sale?postal_code=" + zipcode + "&prop_status=for_sale&price_min=1&beds_min=1&baths_min=1&sqft_min=1&sort=relevance&radius=15",
         "headers": {
             "x-rapidapi-host": "realtor.p.rapidapi.com",
-            "x-rapidapi-key": "f9272201fdmshbde115583027395p1cc4d4jsn0cd13e343f9a"
+            "x-rapidapi-key": "6fda13d354msh7ef414a666d5f78p1c48e3jsnd0ca247d8fe4"
         }
     };
 
