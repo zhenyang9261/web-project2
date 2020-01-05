@@ -20,8 +20,7 @@
                         </li>
                         {{!-- Sign Up button --}}
                         <li class="nav-item"><a class="nav-link text-dark font-weight-bolder" href="#">Sign up</a></li>
-                        {{!-- Home button --}}
-                        <li class="nav-item"><a class="btn btn-primary pl-0 pl-lg-3" href="/">Home</a></li>
+                        
                     </ul>
                 </div>
             </nav>
@@ -58,6 +57,11 @@
                                     {{!-- House square footage --}}
                                     {{!-- <li class="list-inline-item"><small
                                             class="text-muted"><span>{{sqf}}</span>sqft</small></li> --}}
+                                    {{!-- Delete this favorite --}}
+                                    <li class="list-inline-item"><small class="text-muted">
+                                            <button class="btn btn-primary btn-sm ml-auto d-block delete-favorites" data-id="{{id}}">Delete</button>
+                                        </small>
+                                    </li>
                                 </ul>
                                 {{!-- House Address --}}
                                 <p class="card-text" id="house-address">{{street}}, {{city}}, {{zipCode}}
