@@ -55,6 +55,14 @@ body {
 	overflow-y: scroll;
 }
 
+.home-preview-card img {
+	max-height: 220px;
+}
+
+.card-container:last-child {
+	margin-bottom: 200px !important;
+}
+
 .favorites-img {
 	width: 100%;
 	height: 200px;
