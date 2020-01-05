@@ -59,69 +59,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" id="priceRangeButton" class="btn btn-primary btn-sm ml-auto d-block mt-2">Done</button>
-                        </form>
-                    </div>
-                </li>
-                {{!-- Numbers of Bedrooms Selection --}}
-                <li class="nav-item dropdown">
-                    <a id="dropdownNumBeds" class="nav-link dropdown-toggle border border-primary rounded py-1 mr-1" data-toggle="dropdown"
-                        href="#" role="button" >Beds</a>
-                    <div class="dropdown-menu ml-n5 p-3" aria-labelledby="dropdownNumBeds">
-                        <form class="text-center">
-                            <h6 class="dropdown-header">Bedrooms</h6>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="numBedsOption" value="0" checked>
-                                <label class="form-check-label" for="anyBeds">Any</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="numBedsOption" value="1">
-                                <label class="form-check-label" for="oneBed">1+</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="numBedsOption" value="2">
-                                <label class="form-check-label" for="twoBeds">2+</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="numBedsOption" value="3">
-                                <label class="form-check-label" for="threeBeds">3+</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="numBedsOption" value="4">
-                                <label class="form-check-label" for="fourBeds">4+</label>
-                            </div>
-                            <button id="numBedsButton" class="btn btn-primary btn-sm mx-auto mt-2 d-block">Done</button>
-                        </form>
-                    </div>
-                </li>
-                {{!-- Numbers of Bathrooms Selection --}}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle border border-primary rounded py-1 mr-1" data-toggle="dropdown"
-                        href="#" role="button" aria-haspopup="true" aria-expanded="false">Baths</a>
-                    <div class="dropdown-menu ml-n5 p-3">
-                        <form class="text-center">
-                            <h6 class="dropdown-header">Bathrooms</h6>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="numBathsOption" value="0" checked>
-                                <label class="form-check-label" for="anyBath">Any</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="numBathsOption" value="1">
-                                <label class="form-check-label" for="oneBath">1+</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="numBathsOption" value="2">
-                                <label class="form-check-label" for="twoBaths">2+</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="numBathsOption" value="3">
-                                <label class="form-check-label" for="threeBaths">3+</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="numBathsOption" value="4">
-                                <label class="form-check-label" for="fourBaths">4+</label>
-                            </div>
-                            <button id="numBathsButton" class="btn btn-primary btn-sm mx-auto mt-2 d-block">Done</button>
+                            <button type="submit" class="btn btn-primary btn-sm ml-auto d-block mt-2 range-button">Done</button>
                         </form>
                     </div>
                 </li>
@@ -158,9 +96,9 @@
                     </div>
                 </div>
                 {{!-- List of Houses --}}
-                <div class="row row-cols-1 row-cols-md-2">
+                <div class="row row-cols-1 row-cols-md-2" id="houses-cards">
                     {{#each housesList.housesData}}
-                    <div class="col mb-4">
+                    <div class="col mb-4 d-block">
                         <div class="card home-preview-card shadow-sm h-100" data-lat="{{latLng.lat}}"
                             data-lng="{{latLng.lng}}" data-price="{{price}}" data-bedrooms="{{bedrooms}}"
                             data-bathrooms="{{bathrooms}}" data-sqft="{{sqft}}" data-imgUrl="{{imgUrl}}">
@@ -205,4 +143,4 @@
 <script src="/js/houses.js"></script>
 <script src="/js/sort.js"></script>
 {{!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdpacUXCdfCmc4qgSzpk14NE3nHOcMsuY&callback=initMap" async defer></script> --}}
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdpacUXCdfCmc4qgSzpk14NE3nHOcMsuY&callback=initMap" async defer></script>
+{{!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdpacUXCdfCmc4qgSzpk14NE3nHOcMsuY&callback=initMap" async defer></script> --}}

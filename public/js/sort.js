@@ -1,4 +1,3 @@
-
 /*=============================================
 =            Sorting Functionality            =
 =============================================*/
@@ -51,20 +50,21 @@ function sortListDir() {
 /*=============================================
  =   Home's Price Range Filter Functionality  =
 =============================================*/
-
-$("#priceRangeButton").on("click", function (e) {
+$(".range-button").on("click", function (e) {
     let minPrice = parseFloat($(".minPrice").val());
     let maxPrice = parseFloat($(".maxPrice").val());
 
-    $(".home-preview-card").each(function (i, el) {
+    $("#houses-cards").children().children().each(function (i, el) {
+
         let housePrice = parseFloat(el.dataset.price.match(/\d+/g).join(""));
 
         if (!isNaN(minPrice) && !isNaN(maxPrice)) {
-            if (housePrice > maxPrice || housePrice < minPrice) {
+            if ((housePrice > maxPrice || housePrice < minPrice)) {
                 el.parentNode.classList.remove("d-block");
                 el.parentNode.classList.add("d-none");
                 e.preventDefault();
-            } else {
+            }
+            else {
                 el.parentNode.classList.remove("d-none");
                 el.parentNode.classList.add("d-block");
                 e.preventDefault();
@@ -72,11 +72,10 @@ $("#priceRangeButton").on("click", function (e) {
         } else {
             el.parentNode.classList.remove("d-none");
             el.parentNode.classList.add("d-block");
-            // e.preventDefault();
         }
+
     });
 });
-
 
 // Price range validation
 (function () {
@@ -87,7 +86,6 @@ $("#priceRangeButton").on("click", function (e) {
         // Loop over them and prevent submission
         var validation = Array.prototype.filter.call(forms, function (form) {
             form.addEventListener('submit', function (event) {
-                console.log(form);
                 if (form.checkValidity() === false) {
                     event.preventDefault();
                     event.stopPropagation();
@@ -97,60 +95,3 @@ $("#priceRangeButton").on("click", function (e) {
         });
     }, false);
 })();
-
-
-/*=============================================
-=    Home's bedrooms filter functionality     =
-=============================================*/
-$("#numBedsButton").on("click", function (e) {
-    e.preventDefault();
-    let numOfBedsRange = parseInt($("input[name='numBedsOption']:checked").val());
-
-    $(".home-preview-card").each(function (i, el) {
-        let houseNumBeds = parseInt(el.dataset.bedrooms);
-        if (houseNumBeds < numOfBedsRange) {
-            el.parentNode.classList.remove("d-block");
-            el.parentNode.classList.add("d-none");
-        } else {
-            el.parentNode.classList.remove("d-none");
-            el.parentNode.classList.add("d-block");
-        }
-    });
-});
-
-/*=============================================
-=    Home's bathrooms filter functionality     =
-=============================================*/
-$("#numBathsButton").on("click", function (e) {
-    e.preventDefault();
-    let numOfBathsRange = parseInt($("input[name='numBathsOption']:checked").val());
-
-    $(".home-preview-card").each(function (i, el) {
-        let houseNumBaths = parseInt(el.dataset.bathrooms);
-        if (houseNumBaths < numOfBathsRange) {
-            el.parentNode.classList.remove("d-block");
-            el.parentNode.classList.add("d-none");
-        } else {
-            el.parentNode.classList.remove("d-none");
-            el.parentNode.classList.add("d-block");
-        }
-    });
-});
-/*=============================================
-=    Home's bedrooms filter functionality     =
-=============================================*/
-$("#numBedsButton").on("click", function (e) {
-    e.preventDefault();
-    let numOfBedsRange = parseInt($("input[name='numBedsOption']:checked").val());
-
-    $(".home-preview-card").each(function (i, el) {
-        let houseNumBeds = parseInt(el.dataset.bedrooms);
-        if (houseNumBeds < numOfBedsRange) {
-            el.parentNode.classList.remove("d-block");
-            el.parentNode.classList.add("d-none");
-        } else {
-            el.parentNode.classList.remove("d-none");
-            el.parentNode.classList.add("d-block");
-        }
-    });
-});
