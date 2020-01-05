@@ -48,8 +48,6 @@ $(function () {
     property["picURL"] = picURL;
     property["price"] = price;
 
-    console.log(property);
-
     $.post("/api/property", property, function (data) {
       var favorite = {
         //userId: 1,
@@ -69,6 +67,7 @@ $(function () {
 
   // When Saved Favorites button is clicked
   var handleGetFavoritesBtn = function () {
+    
     $.ajax({
       url: "/api/favorites",
       method: "GET",
@@ -85,8 +84,22 @@ $(function () {
 
   };
 
-  // Add button listeners 
+  // Add Get Favorites button listeners 
   $("#get-favorites").on("click", handleGetFavoritesBtn);
+
+  // When delete favorite button is clicked
+  var handleDeleteFavoritesBtn = function () {
+    
+    event.stopPropagation();
+    var id = $(this).data("id");
+    $.ajax({
+      method: "DELETE",
+      url: "/api/favorites/" + id
+    }).done(handleGetFavoritesBtn);
+  };
+
+  // Add Delete Favorite button listeners 
+  $(".delete-favorites").on("click", handleDeleteFavoritesBtn);
 });
 
 $(".contact-agent-button").on("click", function() {
