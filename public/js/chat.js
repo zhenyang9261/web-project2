@@ -124,8 +124,10 @@ function createNewChat() {
 }
 
 function fillNewChat(id, firstName, lastName) {
+    console.log(id);
     currChat.dataset.recipientid = id;
-
+    console.log(currChat.dataset);
+    
     var initialsId = "recipient-intiials-" + id;
     currChat.childNodes[0].childNodes[0].childNodes[0].setAttribute("id", initialsId);
     document.getElementById(initialsId).textContent = firstName[0] + lastName[0];
@@ -291,7 +293,8 @@ getNewContactForm.addEventListener("submit", event => {
         method: "GET"
     })
     .then(response => {
-        fillNewChat(response.id, response.firstName, response.lastName);
+        console.log(response.recipientId);
+        fillNewChat(response.recipientId, response.firstName, response.lastName);
     })
     .catch(err => {
         console.log(err);
