@@ -129,6 +129,10 @@ function fillNewChat(id, firstName, lastName) {
     var initialsId = "recipient-intiials-" + id;
     currChat.childNodes[0].childNodes[0].childNodes[0].setAttribute("id", initialsId);
     document.getElementById(initialsId).textContent = firstName[0] + lastName[0];
+
+    var nameId = "recipient-id-" + id;
+    currChat.childNodes[1].childNodes[0].childNodes[0].setAttribute("id", nameId);
+    currChat.childNodes[1].childNodes[0].childNodes[0].textContent = firstName + " " + lastName;
 }
 
 function displayMessage(text, isUserText) {

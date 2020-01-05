@@ -203,6 +203,7 @@ router.post("/chat", checkAuth, (req, res) => {
     const recipientId = req.body.recipientId;
     
     // adding the message to the messages table in our database
+    console.log(recipientId);
     Message.create({
         text: text, 
         recipientId: recipientId
