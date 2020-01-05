@@ -76,6 +76,11 @@ function addMessageToConversations(message, conversations) {
 
 router.get("/chat", checkAuth, (req, res) => {
     const id = req.token.id;
+    var realtorId;
+
+    if(req.realtorId) {
+        realtorId = req.realtorId;
+    }
 
     const queryString = "SELECT m.recipientId, m.text, m.createdAt, u.id FROM Messages m JOIN \
             UsersMessages um ON m.id = um.messageId JOIN Users u ON um.userId = u.id \
@@ -94,11 +99,37 @@ router.get("/chat", checkAuth, (req, res) => {
                 const conv1Length = conv1.messages.length - 1;
                 const conv2Length = conv2.messages.length - 1;
 
-                return -(conv1.messages[conv1Length].createdAt - conv2.messages[conv2Length].createdAt);
+                return -1 * (conv1.messages[conv1Length].createdAt - conv2.messages[conv2Length].createdAt);
             });
         }
 
-        res.render("chat", {conversations: conversations});
+        if(realtorId) {
+            for(let i = conversations.length - 1; i >= 0; i--) {
+                if(conversations[i].recipientId == realtorId) {
+                    const match = conversations[i];
+
+                    conversations.splice(i, 1);
+                    conversations.unshift(match);
+
+                    return res.render("chat", {conversations: conversations});
+                }
+            }
+
+            User.findOne({where: {id: realtorId}}).then(row => {
+
+                return res.render("chat", {
+                    conversations: conversations, 
+                    realtorId: realtorId, 
+                    firstName: row.dataValues.firstName, 
+                    lastName: row.dataValues.lastName
+                })
+            })
+
+        } else {
+            return res.render("chat", {
+                conversations: conversations,
+            });
+        }
     })
     .catch(err => {
         console.log(err);
@@ -106,7 +137,6 @@ router.get("/chat", checkAuth, (req, res) => {
 });
 
 router.get("/chat/contacts/:recipientIds", (req, res) => {
-    console.log(req.params);
     const recipientIds = JSON.parse(req.params.recipientIds);
     var recipients = [];
 
@@ -129,6 +159,30 @@ router.get("/chat/contacts/:recipientIds", (req, res) => {
         }
 
         res.status(201).json(recipients);
+    })
+    .catch(err => {
+        console.log(err);
+    });
+});
+
+router.get("/chat/new-contact/:email", (req, res) => {
+    console.log('we got in here');
+    User.findOne({
+        where: {
+            email: req.params.email
+        }
+    })
+    .then(row => {
+        return res.status(200).json({
+            "recipientId": row.dataValues.id, 
+            "firstName": row.dataValues.firstName, 
+            "lastName": row.dataValues.lastName
+        })
+    })
+    .catch(err => {
+        return res.status(404).json({
+            "message": "No match found"
+        })
     })
 })
 

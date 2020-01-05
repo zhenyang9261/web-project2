@@ -5,10 +5,32 @@
                 <button class="create-new-chat">></button>
         </div>
         <div class="chat-list-container">
+        {{#if realtorId}}
+            <div class="conversation-preview-display curr-chat" 
+                data-recipientId="{{realtorId}}">
+                <div class="recipient-initials-display-container">
+                    <div class="recipient-initials-display">
+                        <p id="recipient-initials-{{realtorId}}" class="initials"></p>
+                    </div>
+                </div>
+                <div class="recipient-information-container">
+                    <div class="recipient-name-and-time-display">
+                        <p id="recipient-id-{{realtorId}}" class="recipient-name">{{firstName}} {{lastName}}</p>
+                        <p class="last-text-sent-time"></p>
+                    </div>
+                    <p class="last-text-sent"></p>
+                </div>
+            </div>
+        {{/if}}
         {{#each conversations}}
             {{#if @first}}
-            <div class="conversation-preview-display curr-chat" 
-                data-recipientId="{{this.recipientId}}" data-texts="{{getJSONAsString this.messages}}">
+                {{#if realtorId}}
+                    <div class="conversation-preview-display" 
+                        data-recipientId="{{this.recipientId}}" data-texts="{{getJSONAsString this.messages}}">
+                {{else}}
+                    <div class="conversation-preview-display curr-chat" 
+                        data-recipientId="{{this.recipientId}}" data-texts="{{getJSONAsString this.messages}}">
+                {{/if}}   
             {{else}}
             <div class="conversation-preview-display" 
                 data-recipientId="{{this.recipientId}}" data-texts="{{getJSONAsString this.messages}}">
@@ -35,12 +57,15 @@
     </div>
     <div class="chat-main">
         <div class="chat-nav-header main-chat-header">
-            <p class="create-new-chat-prompt off">To:</p>
-            <input class="create-new-chat-input off" type="text" placeholder="Add recipient">
-            <div id="main-chat-initials-display" class="recipient-initials-display">
-                <p class="initials">ZY</p>
-            </div>
-            <button id="more-details-button">Details</button>
+                <p class="create-new-chat-prompt off">To:</p>
+                <form class="get-new-contact-form off" action="">
+                    <input class="create-new-chat-input" type="text" placeholder="Add recipient">
+                    <input type="submit">
+                </form>
+                <div id="main-chat-initials-display" class="recipient-initials-display">
+                    <p class="initials chat-nav-header-initials"></p>
+                </div>
+                <button id="more-details-button">Details</button>
         </div>
         <div class="chat-container">
             <div class="chat-body">

@@ -11,13 +11,32 @@ var chatListContainer = document.querySelector(".chat-list-container");
 var currChatInitialsDisplay = document.getElementById("main-chat-initials-display");
 var moreDetailsButton = document.getElementById("more-details-button");
 var chatHeader = document.querySelector(".main-chat-header");
+var chatNavHeaderInitials = document.querySelector(".chat-nav-header-initials");
 
-var createNewChatInput = document.querySelector(".create-new-chat-input");
+var getNewContactForm = document.querySelector(".get-new-contact-form");
 var createNewChatPrompt = document.querySelector(".create-new-chat-prompt");
 
 var conversations = document.getElementsByClassName("conversation-preview-display");
 var recipientIds = [];
 
+function fillChatNavInitialsContainer() {
+    var initialsId = "recipient-initials-" + currChat.dataset.recipientid;
+    var initials = document.getElementById(initialsId);
+    
+    chatNavHeaderInitials.textContent = initials.textContent;
+}
+
+function checkForNewConversation() {
+    if(document.getElementsByClassName("curr-chat").length > 1) {
+        var currChats = document.getElementsByClassName("curr-chat");
+
+        for(let i = currChats.length - 1; i > 0; i--) {
+            currChats[i].classList.remove("curr-chat");
+        }
+    }
+
+    clearChatDisplay();
+}
 
 function clearChatDisplay() {
     while(chatBody.firstChild) {
@@ -26,12 +45,16 @@ function clearChatDisplay() {
 }
 
 function displayMessages(messages) {
-    messages = JSON.parse(messages);
-
     clearChatDisplay();
 
-    for(const message of messages) {
-        displayMessage(message.text, message.isFromUser);
+    try {
+        messages = JSON.parse(messages);
+
+        for(const message of messages) {
+            displayMessage(message.text, message.isFromUser);
+        }
+    } catch(err) {
+
     }
 }
 
@@ -39,7 +62,7 @@ function createRecipientInitialsDisplay() {
     var recipientInitialsDisplayContainer = document.createElement("div");
     recipientInitialsDisplayContainer.classList.add("recipient-initials-display-container");
 
-    var recipientInitialsDisplay = documne.createElement("div");
+    var recipientInitialsDisplay = document.createElement("div");
     recipientInitialsDisplay.classList.add("recipient-initials-display");
 
     var recipientInitials = document.createElement("p");
@@ -52,14 +75,33 @@ function createRecipientInitialsDisplay() {
 }
 
 function createRecipientInformationContainer() {
-    var recipientInformationContainer = document.createElement("div");
+    var recipientName = document.createElement("p");
+    recipientName.classList.add("recipient-name");
+    recipientName.setAttribute("id", "recipient-id-");
 
+    var lastTextSentTime = document.createElement("p");
+    lastTextSentTime.classList.add("last-text-sent-time");
+
+    var recipientNameAndTimeDisplay = document.createElement("div");
+    recipientNameAndTimeDisplay.classList.add("recipient-name-and-time-display");
+    recipientNameAndTimeDisplay.appendChild(recipientName);
+    recipientNameAndTimeDisplay.appendChild(lastTextSentTime);
+    
+    var lastTextSent = document.createElement("p");
+    lastTextSent.classList.add("last-text-sent");
+
+    var recipientInformationContainer = document.createElement("div");
+    recipientInformationContainer.classList.add("recipient-information-container");
+    recipientInformationContainer.appendChild(recipientNameAndTimeDisplay);
+    recipientInformationContainer.appendChild(lastTextSent);
+
+    return recipientInformationContainer;
 }
 
 function createNewChatPreviewDisplay() {
     var newChatDisplay = document.createElement("div");
     newChatDisplay.classList.add("conversation-preview-display");
-    newChatDisplay.classList("new-conversation")
+    newChatDisplay.classList.add("new-conversation")
     newChatDisplay.classList.add("curr-chat");
 
     currChat.classList.remove("curr-chat");
@@ -68,9 +110,10 @@ function createNewChatPreviewDisplay() {
     var recipientInitialsDisplay = createRecipientInitialsDisplay();
     var recipientInformationContainer = createRecipientInformationContainer();
 
-
-    // class="recipient-initials-display-container"
-    // class="recipient-information-container"
+    currChat.appendChild(recipientInitialsDisplay);
+    currChat.appendChild(recipientInformationContainer);
+    currChat.classList.add("pending-chat");
+    currChat.addEventListener("click", changeCurrChat);
 
     chatListContainer.prepend(currChat);
 }
@@ -78,7 +121,14 @@ function createNewChatPreviewDisplay() {
 function createNewChat() {
     clearChatDisplay();
     createNewChatPreviewDisplay();
-    
+}
+
+function fillNewChat(id, firstName, lastName) {
+    currChat.dataset.recipientid = id;
+
+    var initialsId = "recipient-intiials-" + id;
+    currChat.childNodes[0].childNodes[0].childNodes[0].setAttribute("id", initialsId);
+    document.getElementById(initialsId).textContent = firstName[0] + lastName[0];
 }
 
 function displayMessage(text, isUserText) {
@@ -103,14 +153,14 @@ function displayMessage(text, isUserText) {
 }
 
 function hideChatNavDisplay() {
-    currChatInitialsDisplay.style.display = "none";
-    moreDetailsButton.style.display = "none";
+    currChatInitialsDisplay.classList.add("off");
+    moreDetailsButton.classList.add("off");
 
     chatHeader.classList.remove("main-chat-header");
     chatHeader.classList.remove("chat-nav-header");
     chatHeader.classList.add("create-new-chat-header");
 
-    createNewChatInput.classList.remove("off");
+    getNewContactForm.classList.remove("off");
     createNewChatPrompt.classList.remove("off");
 }
 
@@ -135,6 +185,8 @@ $.ajax({
         currDisplay.textContent = recipient.firstName + " " + recipient.lastName;
         currInitials.textContent = recipient.firstName[0] + recipient.lastName[0];
     } 
+
+    fillChatNavInitialsContainer()
 })
 .catch(err => {
     console.log(err);
@@ -188,23 +240,58 @@ createText.addEventListener("submit", event => {
 });
 
 for(const conversationDisplay of conversations) {
-    conversationDisplay.addEventListener("click", event => {
-        var display = event.target;
+    conversationDisplay.addEventListener("click", changeCurrChat);
+}
 
-        while(display.classList[0] != "conversation-preview-display") {
-            display = display.parentNode;
-        }
+function changeCurrChat(event) {
+    if(document.querySelector(".pending-chat")) {
+        const pendingChat = document.querySelector(".pending-chat");
+        pendingChat.parentNode.removeChild(pendingChat);
 
-        currChat.classList.remove("curr-chat");
+        getNewContactForm.classList.add("off")
+        createNewChatPrompt.classList.add("off");
+    }
 
-        currChat = display;
-        currChat.classList.add("curr-chat");
+    var display = event.target;
 
-        displayMessages(currChat.dataset['texts']);
-    })
+    while(display.classList[0] != "conversation-preview-display") {
+        display = display.parentNode;
+    }
+
+    currChat.classList.remove("curr-chat");
+
+    currChat = display;
+    currChat.classList.add("curr-chat");
+    fillChatNavInitialsContainer();
+
+    currChatInitialsDisplay.classList.remove("off");
+    moreDetailsButton.classList.remove("off");
+
+    chatHeader.classList.add("main-chat-header");
+    chatHeader.classList.add("chat-nav-header");
+    chatHeader.classList.remove("create-new-chat-header");
+
+    displayMessages(currChat.dataset['texts']);
 }
 
 createNewChatButton.addEventListener("click", event => {
     hideChatNavDisplay();
     createNewChat();
+});
+
+getNewContactForm.addEventListener("submit", event => {
+    event.preventDefault();
+
+    $.ajax({
+        url: "/users/chat/new-contact/" + getNewContactForm.elements[0].value, 
+        method: "GET"
+    })
+    .then(response => {
+        fillNewChat(response.id, response.firstName, response.lastName);
+    })
+    .catch(err => {
+        console.log(err);
+    })
 })
+
+checkForNewConversation();
