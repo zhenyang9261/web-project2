@@ -1,3 +1,5 @@
+
+
 $(function () {
   // Variable will be use to store details of input address: City's name, State, postal code, latitude and longitude.
   var addressData = {};
@@ -130,13 +132,10 @@ if (localStorage.getItem("name")) {
   console.log("we got in here");
   var loginButton = document.querySelector(".login-button");
   var signUpButton = document.querySelector(".sign-up-button");
-
   loginButton.style.display = "none";
   signUpButton.style.display = "none";
-
   var welcomeMessage = document.createElement("li");
   welcomeMessage.textContent = "Welcome, " + localStorage.getItem("name") + "!";
-
   var authNavContainer = document.querySelector(".auth-nav-container");
   authNavContainer.appendChild(welcomeMessage);
 =======
@@ -187,6 +186,28 @@ chatButton.addEventListener("click", event => {
 
   location.href = "/users/chat?token=" + localStorage.getItem("jwt");
 });
+
+  // When Saved Favorites button is clicked
+  var handleGetFavoritesBtn = function () {
+    $.ajax({
+      url: "/api/favorites",
+      method: "GET",
+      headers: {
+        token: localStorage.getItem("jwt")
+      },
+      dataType: 'html'
+    }).done(function (data) {
+
+      document.open();
+      document.write(data);
+      document.close();
+    });
+
+  };
+
+  // Add button listeners 
+  $("#get-favorites").on("click", handleGetFavoritesBtn);
+
 
 // // The API object contains methods for each kind of request we'll make
 // var API = {
@@ -281,3 +302,5 @@ chatButton.addEventListener("click", event => {
 // // Add event listeners to the submit and delete buttons
 // $submitBtn.on("click", handleFormSubmit);
 // $exampleList.on("click", ".delete", handleDeleteBtnClick);
+
+

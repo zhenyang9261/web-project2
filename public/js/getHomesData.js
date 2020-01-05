@@ -1,16 +1,6 @@
-var env = process.env.NODE_ENV || "development";
-var config = require(__dirname + "/../../config/config.js")[env];
-
 /* Export functionality to make API call and get House for sale data   */
 // This API is just for testing. Unsure to be use in production
 module.exports = function (zipcode, res) {
-
-  if (config.use_rapidapi_env_variable) {
-    var rapidapi_key = process.env[config.use_rapidapi_env_variable];
-  } else {
-    var rapidapi_key = process.env.RAPIDAPI_KEY;
-  }
-
   var http = require("https");
   var data = {
     housesData: [],
@@ -28,7 +18,7 @@ module.exports = function (zipcode, res) {
       "&prop_status=for_sale&price_min=1&beds_min=1&baths_min=1&sqft_min=1&sort=relevance&radius=15",
     headers: {
       "x-rapidapi-host": "realtor.p.rapidapi.com",
-      "x-rapidapi-key": rapidapi_key
+      "x-rapidapi-key": "6fda13d354msh7ef414a666d5f78p1c48e3jsnd0ca247d8fe4"
     }
   };
 

@@ -1,17 +1,24 @@
-body {
-    background-color: black
-}
-
 h5 {
     margin: 0;
 }
 
+header {
+    margin-bottom: 10px;
+}
+
+.chat-container {
+    width: 15vw;
+}
+
 .chat-window {
     width: 70vw;
-    height: 100vh;
+    height: 90vh;
     background-color: rgb(245, 245, 245);
     display: flex;
     min-width: 560px;
+    margin-left: 15vw;
+    border: 2px solid rgb(235, 235, 235);
+    border-radius: 2px;
 }
 
 .chat-nav-container {
@@ -152,8 +159,16 @@ h5 {
     text-decoration: none;
     border: none;
     font-size: 12px;
-    width: 50%;
+    width: 70%;
     padding: 5px 5px 0px 2.5px;
+}
+
+.create-new-chat-submit-button {
+    height: 10px;
+    background-color: transparent;
+    color: rgb(100, 100, 230);
+    text-align: center;
+    border: none;
 }
 
 .off {
