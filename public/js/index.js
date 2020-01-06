@@ -1,5 +1,3 @@
-
-
 $(function () {
   // Variable will be use to store details of input address: City's name, State, postal code, latitude and longitude.
   var addressData = {};
@@ -113,6 +111,21 @@ Http.onreadystatechange = function () {
 // };
 
 // // When Saved Favorites button is clicked
+// var handleGetFavoritesBtn = function () {
+//   //window.location.href = "/api/favorites/" + localStorage.getItem("jwt");
+//   $.ajax({
+//     url: "/api/favorites",
+//     method: "GET",
+//     headers: {
+//       token: localStorage.getItem("jwt")
+//     },
+//     dataType: 'html'
+//   }).done(function (data) {
+  
+//     document.open();
+//     document.write(data);
+//     document.close();
+//   });
 // var handleGetFavoritesBtn = function() {
 //   //window.location.href = "/api/favorites/" + localStorage.getItem("jwt");
 //   $.ajax({
