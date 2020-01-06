@@ -4,6 +4,7 @@ $(function () {
 
   //Loads route => /houses/:zipcode
   let getHomesForSaleData = function (zipcode) {
+    document.getElementById("modal-loader").style.display = "block";
     window.location.href = "/houses/" + zipcode;
   };
 
@@ -14,6 +15,8 @@ $(function () {
     appId: "plUZWS470NUB",
     apiKey: "d8417e1882d8024fb43cf8a17e547c76",
     container: document.getElementsByClassName("input-address")[0]
+  }).configure({
+    countries: ['us']
   });
 
   placesAutocomplete.on("change", function (e) {
