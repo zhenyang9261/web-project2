@@ -14,12 +14,15 @@
                     <i class="fas fa-bars fa-md"></i>
                 </button>
                 <div class="collapse navbar-collapse mt-5 mt-lg-2 mr-lg-5 p-3" id="navbarNav">
-                    <ul class="navbar-nav ml-auto text-left">
+                    <ul class="navbar-nav ml-auto text-right auth-nav-container">
                         {{!-- Login button --}}
-                        <li class="nav-item mr-3"><a class="nav-link text-dark font-weight-bolder" href="#">Login</a>
-                        </li>
+                        <li class="nav-item mr-3 chat-button logged-in"><a class="nav-link text-dark font-weight-bolder" href="/users/chat">Chats</a></li>
                         {{!-- Sign Up button --}}
-                        <li class="nav-item"><a class="btn btn-primary pl-0 pl-lg-3" href="#">Sign up</a></li>
+                        <li class="nav-item logout-button logged-in"><a class="btn btn-outline-primary" href="/">Logout</a></li>
+                        {{!-- Login button --}}
+                        <li class="nav-item mr-3 login-button logged-out"><a class="nav-link text-dark font-weight-bolder" href="/login">Login</a></li>
+                        {{!-- Sign Up button --}}
+                        <li class="nav-item sign-up-button logged-out"><a class="btn btn-outline-primary" href="/signup">Sign up</a></li>
                     </ul>
                 </div>
             </nav>
@@ -165,9 +168,16 @@
                 <div id="houses-search-result" class="row row-cols-1 row-cols-md-2">
                     {{#each housesList.housesData}}
                     <div class="col mb-4">
-                        <div class="card home-preview-card shadow-sm h-100" data-lat="{{latLng.lat}}"
-                            data-lng="{{latLng.lng}}" data-price="{{price}}" data-bedrooms="{{bedrooms}}"
-                            data-bathrooms="{{bathrooms}}" data-sqft="{{sqft}}" data-imgUrl="{{imgUrl}}">
+                        <div class="card home-preview-card shadow-sm h-100" 
+                            data-lat="{{latLng.lat}}" 
+                            data-lng="{{latLng.lng}}"
+                            data-price="{{price}}"
+                            data-bedrooms="{{bedrooms}}"
+                            data-bathrooms="{{bathrooms}}"
+                            data-sqft="{{sqft}}"
+                            data-imgUrl="{{imgUrl}}"
+                            data-address="{{address}}"
+                        >
                             {{!-- Save home to favorite list --}}
                             <button type="button" class="btn btn-link position-absolute save-home-button" id={{id}}
                                 data-toggle="button" aria-pressed="false">
@@ -202,6 +212,105 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="modal-container off">
+    <button class="exit-modal-button">X</button>
+    <div class="property-images-container">
+        <img class="main-property-image" src="">
+        <div class="sub-property-image-list-container">
+            {{!-- <div class="sub-property-image-container">
+                <img class="sub-property-image" src="https://photos.zillowstatic.com/cc_ft_1536/ISvkjpmucs3nyi1000000000.webp" alt="">
+            </div>
+             <div class="sub-property-image-container">
+                <img class="sub-property-image" src="https://photos.zillowstatic.com/cc_ft_1536/ISvkjpmucs3nyi1000000000.webp" alt="">
+            </div>
+             <div class="sub-property-image-container">
+                <img class="sub-property-image" src="https://photos.zillowstatic.com/cc_ft_1536/ISvkjpmucs3nyi1000000000.webp" alt="">
+            </div>
+             <div class="sub-property-image-container">
+                <img class="sub-property-image" src="https://photos.zillowstatic.com/cc_ft_1536/ISvkjpmucs3nyi1000000000.webp" alt="">
+            </div> --}}
+        </div>
+    </div>
+    <div class="property-information-container">
+        <header class="main-house-display-header">
+            <h2 class="pillow-header">Pillow</h2>
+            <div class="save-share-more-container">
+                <button class="header-button save-home-button">Save</button>
+                <button class="header-button">Share</button>
+                <button class="header-button">More</button>
+            </div>
+        </header>
+        <hr>
+        <div class="property-stats-container">
+            <div class="price-bed-bath-sqr-foot-container">
+                <h3 class="property-price-header"><span class="property-price"></span></h3>
+                <p class="num-bed-display"><span class="num-bed"></span> ba</p>
+                <p class="num-bath-display"><span class="num-bath"></span> bd</p>
+                <p class="sqr-foot-display" style="padding-left: 5px"><span class="sqrft"></span></p>
+            </div>
+        </div>
+        <h5>Address: <span class="address-modal-display"></span></h5>
+        <p><strong>Est. payment:</strong><span class="monthly-price"></span>/mo</p>
+        <div class="tour-contact-button-container">
+            <button class="tour-and-contact-button contact-agent-button" data-realtorid="5">Contact an Agent</button>
+            <button class="tour-and-contact-button take-tour-button">Take a Tour</button>
+        </div>
+        <hr>
+        <div class="street-view-container">
+            <iframe class="street-view-iframe" frameborder="0" style="border:0"
+            src="https://www.google.com/maps/embed/v1/streetview?location=27.9081,-82.4974&key=AIzaSyA9RYFLOsAjw3UtphZfNyO8DHo8fCwmJn8" 
+            allowfullscreen></iframe>
+        </div>
+        <hr>
+        <h2 id="facts-and-features">Facts and features</h2>
+        <div class="facts-and-features-list-container">
+            <div class="facts-and-features-container">
+                <img class="facts-and-features-image" src="../img/yearBuilt.png" alt="">
+                <div class="fact-and-feature-type-container">
+                    <h5>Year built</h4>
+                    <p>2015</p>
+                </div>
+            </div>
+            <div class="facts-and-features-container">
+                <img class="facts-and-features-image" src="../img/heating.png" alt="">
+                <div class="fact-and-feature-type-container">
+                    <h5>Heating</h4>
+                    <p>Gas</p>
+                </div>
+            </div>
+            <div class="facts-and-features-container">
+                <img class="facts-and-features-image" src="../img/lotSize.png" alt="">
+                <div class="fact-and-feature-type-container">
+                    <h5>Lot size</h4>
+                    <p class="sqrft"> sqft</p>
+                </div>
+            </div>
+            <div class="facts-and-features-container">
+                <img class="facts-and-features-image" src="../img/bathroom.png" alt="">
+                <div class="fact-and-feature-type-container">
+                    <h5>Bathrooms</h4>
+                    <p class="num-bath"></p>
+                </div>
+            </div>
+            <div class="facts-and-features-container">
+                <img class="facts-and-features-image" src="../img/bedroom.png" alt="">
+                <div class="fact-and-feature-type-container">
+                    <h5>Bedrooms</h4>
+                    <p class="num-bed"></p>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <h2>Get more information</h2>
+        <hr>
+        <form class="more-information-form" action="">
+            <input class="form-input" placeholder="Name" type="text">
+            <input class="form-input" placeholder="Email" type="text">
+            <input class="form-input" placeholder="Phone" type="text">
+            <textarea name="" id="" cols="30" rows="10" placeholder="Message"></textarea>
+            <input class="submit-button" type="submit" value="Submit">
+        </form>
     </div>
 </div>
 

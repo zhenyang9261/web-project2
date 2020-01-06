@@ -1,3 +1,30 @@
+ <header class="site-header">
+    <div class="container">
+      <nav class="navbar navbar-expand-lg navbar-light" aria-label="Main navigation">
+        {{!-- Home Page Logo --}}
+        <a class="navbar-brand" href="/">
+          <img src="/img/logo.png" width="180" alt="Pillow Logo">
+        </a>
+        <button class="navbar-toggler mb-2" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars fa-md"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto text-right auth-nav-container">
+              {{!-- Sign Up button --}}
+              <li class="nav-item logout-button logged-in"><a class="btn btn-outline-primary" href="/">Logout</a></li>
+              {{!-- Login button --}}
+              <li class="nav-item mr-3 login-button logged-out"><a class="nav-link text-dark font-weight-bolder" href="/login">Login</a></li>
+              {{!-- Sign Up button --}}
+              <li class="nav-item sign-up-button logged-out"><a class="btn btn-outline-primary" href="/signup">Sign up</a></li>
+              <li class="nav-item logout-button logged-in">
+                    <a class="nav-link text-dark font-weight-bolder" id="get-favorites">Favorites</a>
+              </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+</header>
 <div class="chat-window">
     <div class="chat-nav-container">
         <div class="chat-nav-header">
@@ -5,10 +32,32 @@
                 <button class="create-new-chat">></button>
         </div>
         <div class="chat-list-container">
+        {{#if realtorId}}
+            <div class="conversation-preview-display curr-chat" 
+                data-recipientId="{{realtorId}}">
+                <div class="recipient-initials-display-container">
+                    <div class="recipient-initials-display">
+                        <p id="recipient-initials-{{realtorId}}" class="initials"></p>
+                    </div>
+                </div>
+                <div class="recipient-information-container">
+                    <div class="recipient-name-and-time-display">
+                        <p id="recipient-id-{{realtorId}}" class="recipient-name">{{firstName}} {{lastName}}</p>
+                        <p class="last-text-sent-time"></p>
+                    </div>
+                    <p class="last-text-sent"></p>
+                </div>
+            </div>
+        {{/if}}
         {{#each conversations}}
             {{#if @first}}
-            <div class="conversation-preview-display curr-chat" 
-                data-recipientId="{{this.recipientId}}" data-texts="{{getJSONAsString this.messages}}">
+                {{#if realtorId}}
+                    <div class="conversation-preview-display" 
+                        data-recipientId="{{this.recipientId}}" data-texts="{{getJSONAsString this.messages}}">
+                {{else}}
+                    <div class="conversation-preview-display curr-chat" 
+                        data-recipientId="{{this.recipientId}}" data-texts="{{getJSONAsString this.messages}}">
+                {{/if}}   
             {{else}}
             <div class="conversation-preview-display" 
                 data-recipientId="{{this.recipientId}}" data-texts="{{getJSONAsString this.messages}}">
@@ -35,12 +84,15 @@
     </div>
     <div class="chat-main">
         <div class="chat-nav-header main-chat-header">
-            <p class="create-new-chat-prompt off">To:</p>
-            <input class="create-new-chat-input off" type="text" placeholder="Add recipient">
-            <div id="main-chat-initials-display" class="recipient-initials-display">
-                <p class="initials">ZY</p>
-            </div>
-            <button id="more-details-button">Details</button>
+                <p class="create-new-chat-prompt off">To:</p>
+                <form class="get-new-contact-form off" action="">
+                    <input class="create-new-chat-input" type="text" placeholder="Add recipient">
+                    <input class="create-new-chat-submit-button" type="submit" value=">">
+                </form>
+                <div id="main-chat-initials-display" class="recipient-initials-display">
+                    <p class="initials chat-nav-header-initials"></p>
+                </div>
+                <button id="more-details-button">Details</button>
         </div>
         <div class="chat-container">
             <div class="chat-body">
@@ -66,7 +118,5 @@
             
         </div>
     </div>
-    
-</div>
-<script src="/socket.io/socket.io.js" type="text/javascript"></script>
+    <script src="/socket.io/socket.io.js" type="text/javascript"></script>
 <script src="/js/chat.js" type="text/javascript"></script>
