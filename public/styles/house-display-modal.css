@@ -1,0 +1,231 @@
+.modal-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(235, 235, 235, 0.8);
+}
+
+.exit-modal-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: transparent;
+    font-size: 28px;
+    color: white;
+    border: none;
+}
+
+.off {
+    display: none;
+}
+
+.property-images-container {
+    width: 50%;
+    height: 90%;
+    margin-right: 10px;
+    overflow: scroll;
+    background-color: white;
+}
+
+.main-property-image {
+    width: 100%;
+    min-height: 240px;
+    max-height: 480px;
+    margin-bottom: 10px;
+}
+
+.sub-property-image-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.sub-property-image-container {
+    width: 49.5%;
+    margin-bottom: 10px;
+}
+
+.sub-property-image {
+    width: 100%;
+    height: 100%;
+}
+
+.property-information-container {
+    width: 35%;
+    height: 90%;
+    padding: 10px;
+    overflow: scroll;
+    background-color: white;
+}
+
+.main-house-display-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.price-bed-bath-sqr-foot-container {
+    display: flex;
+    align-items: baseline;
+}
+
+.pillow-header {
+    font-size: 32px;
+    font-weight: 550;
+    color: rgb(27, 127, 204);
+}
+
+.header-button {
+    color: rgb(27, 127, 204);
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.property-price-header {
+    letter-spacing: -1px;
+    margin-right: 20px;
+}
+
+.num-bed-display {
+    border-right: 1px solid rgb(200, 200, 200);
+    padding: 0px 5px 0px 5px;
+}
+
+.num-bath-display {
+    border-right: 1px solid rgb(200, 200, 200);
+    padding: 0 5px 0 5px;
+}
+
+.tour-contact-button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tour-and-contact-button {
+    padding: 10px 20px 10px 20px;
+    border: 1px solid rgb(27, 127, 204);
+    background-color: transparent;
+    color: rgb(27, 127, 204);
+    border-radius: 5px;
+    font-weight: 400;
+    width: 49%;
+}
+
+.take-tour-button {
+    background-color: rgb(27, 127, 204);
+    color: white;
+}
+
+.property-section-nav-container {
+    display: flex;
+    align-items: center;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.property-nav-link {
+    margin: 0 12px 0 0;
+}
+
+.street-view-container {
+    width: 100%;
+    padding: 0 10px 0 10px;
+}
+
+.street-view-iframe {
+    width: 100%;
+}
+
+.property-description-modal {
+    width: 100%;
+    padding: 0 10px 0 10px
+}
+
+.facts-and-features-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 0 10px 0;
+}
+
+.facts-and-features-container {
+    display: flex;
+    justify-content: flex-start;
+    width: 45%;
+}
+
+.facts-and-features-image {
+    width: 50px;
+    height: 50px;
+    margin-right: 5px;
+}
+
+.facts-and-features-sub-header {
+    font-size: 16px;
+    font-weight: 500;
+    background-color: rgb(72, 146, 202);
+    padding: 10px 0 10px 0;
+}
+
+.more-information-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-input {
+    padding: 5px;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+.submit-button {
+    text-align: center;
+    padding: 5px;
+    width: 100%;
+    margin-top: 20px;
+    background-color:rgb(27, 127, 204);
+    color: white;
+    border-radius: 5px;
+}
+
+.inline {
+    display: inline;
+}
+
+.great-schools-rating-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.great-schools-rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(27, 127, 204);
+    color: white;
+    border-radius: 50%;
+    text-align:center;
+    width: 50px;
+    height: 50px;
+    margin-right: 5px;
+}
+
+.num-out-of-ten {
+    margin: 0px;
+    font-size: 18px;
+}
+
+.of-ten {
+    font-size: 12px;
+}
+
+.similar-home-container {
+    display: flex;
+}
