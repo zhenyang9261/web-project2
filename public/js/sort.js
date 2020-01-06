@@ -1,51 +1,36 @@
 /*=============================================
 =            Sorting Functionality            =
 =============================================*/
+let ascendingList = [];
+let descendingList = [];
 var sortDirection = "";
+
+function sortHouseCards() {
+    $(".home-preview-card").parent().sort((a, b) => {
+        return a.children[0].dataset.price.match(/\d+/g).join("") - b.children[0].dataset.price.match(/\d+/g).join("")})
+        .each((i, el) => ascendingList.push(el));
+
+    $(".home-preview-card").parent().sort((a, b) => { 
+        return b.children[0].dataset.price.match(/\d+/g).join("") - a.children[0].dataset.price.match(/\d+/g).join("")})
+        .each((i, el) => descendingList.push(el));
+}
+sortHouseCards();
+
 $(".dropdown-item").on("click", function () {
     sortDirection = $(this).data("sort");
-    sortListDir();
-});
-
-function sortListDir() {
-    var i, switching, housesList, shouldSwitch;
-    switching = true;
-    // Make a loop that will continue until no switching has been done:
-    while (switching) {
-        // start by saying: no switching is done:
-        switching = false;
-
-        housesList = $(".home-preview-card");
-        // Loop through all list-items:
-        for (i = 0; i < (housesList.length - 1); i++) {
-            //start by saying there should be no switching:
-            shouldSwitch = false;
-            /* check if the next item should switch place with the current item,
-            based on the sorting direction (asc or desc): */
-            if (sortDirection === "asc") {
-                if (parseFloat(housesList[i].dataset.price.match(/\d+/g).join("")) > parseFloat(housesList[i + 1].dataset.price.match(/\d+/g).join(""))) {
-                    /* if next item is alphabetically lower than current item,
-                    mark as a switch and break the loop: */
-                    shouldSwitch = true;
-                    break;
-                }
-            } else if (sortDirection === "desc") {
-                if (parseFloat(housesList[i].dataset.price.match(/\d+/g).join("")) < parseFloat(housesList[i + 1].dataset.price.match(/\d+/g).join(""))) {
-                    /* if next item is alphabetically higher than current item,
-                    mark as a switch and break the loop: */
-                    shouldSwitch = true;
-                    break;
-                }
-            }
-        };
-        if (shouldSwitch) {
-            /* If a switch has been marked, make the switch
-            and mark that a switch has been done: */
-            housesList[i].parentNode.parentNode.insertBefore(housesList[i + 1].parentNode, housesList[i].parentNode);
-            switching = true;
+    if (sortDirection == "asc") {
+        $("#houses-cards").empty();
+        for (let house of ascendingList) {
+            $("#houses-cards").append(house);
         }
     }
-}
+    if (sortDirection == "desc"){
+        $("#houses-cards").empty();
+        for (let house of descendingList) {
+            $("#houses-cards").append(house);
+        }
+    }
+});
 
 /*=============================================
  =   Home's Price Range Filter Functionality  =
