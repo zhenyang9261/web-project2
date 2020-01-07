@@ -4,6 +4,7 @@ $(function () {
 
   //Loads route => /houses/:zipcode
   let getHomesForSaleData = function (zipcode) {
+    document.getElementById("modal-loader").style.display = "block";
     window.location.href = "/houses/" + zipcode;
   };
 
@@ -14,6 +15,8 @@ $(function () {
     appId: "plUZWS470NUB",
     apiKey: "d8417e1882d8024fb43cf8a17e547c76",
     container: document.getElementsByClassName("input-address")[0]
+  }).configure({
+    countries: ['us']
   });
 
   placesAutocomplete.on("change", function (e) {
@@ -64,23 +67,9 @@ $(function () {
   });
 });
 
-const Http = new XMLHttpRequest();
-const url =
-  "https://maps.googleapis.com/maps/api/geocode/json?address=GREENSBORO+NC&key=AIzaSyBdpacUXCdfCmc4qgSzpk14NE3nHOcMsuY";
-Http.open("GET", url);
-Http.send();
-
-Http.onreadystatechange = function () {
-  if (this.readyState === 4 && this.status === 200) {
-    let data = JSON.parse(Http.responseText).results[0].geometry.location;
-    console.log(data);
-  }
-};
-
-// /* ================================
-//  Saved Favorites
-//  ================================== */
-
+/* ================================
+ Saved Favorites
+ ================================== */
 
 /*=======
 =  Working with login and logout functionality  =
